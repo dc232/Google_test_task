@@ -27,6 +27,7 @@ accounts_json_check () {
 
 
 terraform_load_balancer_init () {
+    terraform init
     terraform validate
     terraform apply
 }
