@@ -1,6 +1,54 @@
 #!/bin/bash
+python_check () {
+PYTHON_CHECK=$(which python)
+if [ "$PYTHON_CHECK" ]; then
+
+cat << EOF
+#############################
+Python binary appears to exist which
+is needed to run the gce.py 
+file
+#############################
+EOF
+
+sleep 3
+
+cat << EOF
+#############################
+Verifying python installation
+#############################
+EOF
+
+python --version 
+sleep 2 
+python3 --version
+
+else
+cat << EOF
+#############################
+Python binary doesn't appear
+to exist which is needed 
+to run the gce.py 
+file
+#############################
+EOF
+
+sleep 3
+
+cat << EOF
+#############################
+installing Python and Python3
+#############################
+EOF
+sudp apt update
+sudo apt install python -y
+sudo apt install python3 -y
+
+fi
+}
+
 ansible_GCE_plugin () {
-cat << EOF 
+cat << EOF
 #############################
 Installing apache-libcloud
 if not already installed
@@ -28,19 +76,54 @@ sudo apt install python-pip -y
 pip_check_function () {
 pip_check="$(which pip)"
 if [ "$pip_check" ]; then
-echo "pip appears to be installed as a binary has been located in $pip_check"
+
+cat << EOF
+#############################
+pip appears to be installed as a binary 
+has been located in $pip_check
+#############################
+EOF
+
 sleep 2
-echo "verifying installation"
+
+cat << EOF
+#############################
+verifying installation
+#############################
+EOF
+
 sleep 2
 pip -V
-echo "Upgrading pip version if less than latest"
+
+cat << EOF
+#############################
+Upgrading pip version 
+if less than latest
+#############################
+EOF
+
 sleep 2
 sudo pip install --upgrade pip
 ansible_GCE_plugin
 else
-echo "pip does not appear to exist installing pip"
+
+cat << EOF
+#############################
+pip does not appear to 
+exist installing pip
+#############################
+EOF
+
+sleep 3
+
 pip_install
-echo "verifying installation"
+
+cat << EOF
+#############################
+verifying installation
+#############################
+EOF
+
 sleep 2
 pip -V
 fi
@@ -48,22 +131,52 @@ fi
 
 ansible_location_installation_check () {
 Ansible_check=$(which ansible)
-if [ "$Ansible_check" ]; then 
-echo "Ansible exist"
+if [ "$Ansible_check" ]; then
+
+cat << EOF
+#############################
+Ansible exist
+#############################
+EOF
+
 sleep 2
-echo "verifying installation"
+
+cat << EOF
+#############################
+verifying installation
+#############################
+EOF
 sleep 2
 ansible
-echo "Proceeding to check if pip is installed"
+
+cat << EOF
+#############################
+Proceeding to check if 
+pip is installed
+#############################
+EOF
+
 sleep 2
 pip_check_function
 sleep 2
 else
-echo "no ansible binary detected installing ansible"
+
+cat << EOF
+#############################
+no ansible binary 
+detected installing ansible
+#############################
+EOF
+
 sleep 2
 ansible_install_ubuntu
 sleep 2
-echo "checking to see if pip is installed"
+
+cat << EOF
+#############################
+checking to see if pip is installed
+#############################
+EOF
 sleep 2
 pip_check_function
 fi
