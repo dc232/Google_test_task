@@ -1,55 +1,4 @@
 #!/bin/bash
-GCE_ini_Config () {
-
-    cat << EOF
-#############################
-Please ensure that you 
-set the GCEZONE variable
-so that it corresponds with your
-zone
-#############################
-EOF
-
-sleep 3
-
-    cat << EOF
-#############################
-Please ensure that you 
-set the export path to
-the gce.ini file
-before running the 
-script
-#############################
-EOF
-
-sleep 2
-
-
-    SERVICEACCOUNTEMAIL=$(cat account.json | grep email | sed 's/"//g' | sed 's/://' | sed 's/client_email//' | tr -d ' ' | tr -d ,)
-    JASONFILELOCATION="account.json"
-    PROJECTID=$(grep project account.json | sed 's/project_id//' | sed 's/"//g' | tr -d : | tr -d , | tr -d ' ')
-    GCEZONE="us-central1-f"
-    
-    sed -i.bak 's/serviceaccount/'$SERVICEACCOUNTEMAIL'/' gce.ini
-    sed -i 's/jasonfile/'$JASONFILELOCATION'/' gce.ini
-    sed -i 's/projectid/'$PROJECTID'/' gce.ini
-    sed -i 's/gcezone/'$GCEZONE'/' gce.ini
-   sudo echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc
-   source  . ~/.bashrc
-
-   cat << EOF
-#############################
-Evaluating Connection to hosts
-via dynamic inventory file
-gce.py
-#############################
-EOF
-ansible all -i gce.py -m setup
-#http://docs.ansible.com/ansible/latest/setup_module.html
-#explains that -m setup gathers facts about the machine
-}
-
-
 python_check () {
 PYTHON_CHECK=$(which python)
 if [ "$PYTHON_CHECK" ]; then
@@ -74,23 +23,13 @@ python --version
 sleep 2 
 python3 --version
 
-cat << EOF
-#############################
-Setting Python 3 shebang
-in gce.py
-#############################
-EOF
-$PYTHON_CHECK
-sed -i '1d' gce.py
-sed -i.bak '2i #!'$PYTHON_CHECK'' gce.py
-
 else
 cat << EOF
 #############################
 Python binary doesn't appear
 to exist which is needed 
 to run the gce.py 
-file for dynamic inventory
+file
 #############################
 EOF
 
@@ -105,27 +44,10 @@ sudp apt update
 sudo apt install python -y
 sudo apt install python3 -y
 
-cat << EOF
-#############################
-Setting Python 3 shebang
-in gce.py
-#############################
-EOF
-$PYTHON_CHECK
-sed -i '1d' gce.py
-sed -i.bak '2i #!'$PYTHON_CHECK'' gce.py
 fi
 }
 
 ansible_GCE_plugin () {
-#APACHE_CLOUD_BIN_CHECK=$(pip list | grep apache-libcloud)
-#if [ "$APACHE_CLOUD_BIN_CHECK" ]; then
-# pip install --upgrade apache-libcloud
-#else
-#fi
-#may need the above for a later day for now its ok
-
-
 cat << EOF
 #############################
 Installing apache-libcloud
@@ -135,28 +57,6 @@ EOF
 
 sleep 2
 sudo pip install apache-libcloud
-
-cat << EOF
-#############################
-Verfiying that apache-libcloud
-has been installed
-#############################
-EOF
-sleep 2
-
-pip list | grep apache-libcloud
-
-cat << EOF 
-#######################################
-Configuring gce.py and gce.ini
-files to allow for dynamic management
-of GCE VM's via ssh
-#######################################
-EOF
-
-sleep 2
-
-GCE_ini_Config
 }
 
 ansible_install_ubuntu () {
@@ -279,17 +179,7 @@ checking to see if pip is installed
 EOF
 sleep 2
 pip_check_function
-
-cat << EOF
-#############################
-checking to see if python
-is installed
-#############################
-EOF
-sleep 2
-python_check
 fi
 }
-
 
 ansible_location_installation_check
