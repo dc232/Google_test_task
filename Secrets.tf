@@ -1,5 +1,5 @@
 provider "google" {
     credentials = "${file("account.json")}"
-    project = "smart-radio-198517"
-    region ="us-central1"
+    project = "${var.project_name}"
+    region ="${var.region}"
 }

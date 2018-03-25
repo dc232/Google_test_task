@@ -1,6 +1,6 @@
 resource "google_compute_autoscaler" "foobar" {
   name   = "scaler"
-  zone   = "us-central1-f"
+  zone   = "${var.region_zone}"
   target = "${google_compute_instance_group_manager.foobar.self_link}"
 
   autoscaling_policy = {

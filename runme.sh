@@ -12,7 +12,6 @@ ssh_key_creation_for_instances () {
     #N '' means no passphrase but can be added for additional security
 }
 
-
 terraform_install_check () {
     if [ "$TERRAFORM_CHECK" ]; then
 
