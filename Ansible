@@ -1,0 +1,72 @@
+#!/bin/bash
+ansible_GCE_plugin () {
+cat << EOF 
+#############################
+Installing apache-libcloud
+if not already installed
+#############################
+EOF
+
+sleep 2
+sudo pip install apache-libcloud
+}
+
+ansible_install_ubuntu () {
+    sudo apt update
+    sudo apt install  software-properties-common -y
+    sudo apt-add-repository ppa:ansible/ansible
+    sudo apt update
+    sudo apt install ansible -y
+}
+
+
+pip_install () {
+sudo apt update 
+sudo apt install python-pip -y
+}
+
+pip_check_function () {
+pip_check="$(which pip)"
+if [ "$pip_check" ]; then
+echo "pip appears to be installed as a binary has been located in $pip_check"
+sleep 2
+echo "verifying installation"
+sleep 2
+pip -V
+echo "Upgrading pip version if less than latest"
+sleep 2
+sudo pip install --upgrade pip
+ansible_GCE_plugin
+else
+echo "pip does not appear to exist installing pip"
+pip_install
+echo "verifying installation"
+sleep 2
+pip -V
+fi
+}
+
+ansible_location_installation_check () {
+Ansible_check=$(which ansible)
+if [ "$Ansible_check" ]; then 
+echo "Ansible exist"
+sleep 2
+echo "verifying installation"
+sleep 2
+ansible
+echo "Proceeding to check if pip is installed"
+sleep 2
+pip_check_function
+sleep 2
+else
+echo "no ansible binary detected installing ansible"
+sleep 2
+ansible_install_ubuntu
+sleep 2
+echo "checking to see if pip is installed"
+sleep 2
+pip_check_function
+fi
+}
+
+ansible_location_installation_check
