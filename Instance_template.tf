@@ -37,7 +37,7 @@ resource "google_compute_instance_template" "foobar" {
 
 
   metadata {
-    foo = "bar"
+    ssh-keys = "${file("${var.public_key_path}")}"
   }
 
   service_account {

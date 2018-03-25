@@ -1,18 +1,18 @@
-resource "google_project_iam_policy" "project" {
-  project     = "smart-radio-198517"
-  policy_data = "${data.google_iam_policy.admin.policy_data}"
-}
+//resource "google_project_iam_policy" "project" {
+//  project     = "smart-radio-198517"
+//  policy_data = "${data.google_iam_policy.admin.policy_data}"
+//}
 
-data "google_iam_policy" "admin" {
-  binding {
-    role = "roles/compute.networkViewer"
+//data "google_iam_policy" "admin" {
+//  binding {
+//    role = "roles/compute.networkViewer"
 
-    members = [
-      "user:leonard.austin@ravelin.com",
-      "user:michel.blankleder@ravelin.com",
-    ]
-  }
-}
+//    members = [
+//      "user:leonard.austin@ravelin.com",
+//      "user:michel.blankleder@ravelin.com",
+//    ]
+//  }
+//}
 
 
 #data "google_iam_policy" "admin" {
@@ -187,3 +187,11 @@ data "google_iam_policy" "admin" {
 //  "etag": "BwVoFfZOxz0=",
 //  "version": 1
 //}
+
+//possible explanation as to why IAM acess on terraform does not work
+//https://developers.google.com/identity/protocols/OAuth2ServiceAccount?hl=en_GB#delegatingauthority
+//but cant be done with regular gmail account
+//see screen shot about gsuite
+
+
+//added IAM permissions through the console

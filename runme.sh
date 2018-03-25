@@ -6,6 +6,13 @@
 TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform")
 TERRAFORM_VERSION="0.11.5"
 
+ssh_key_creation_for_instances () {
+    mkdir vm_instance_keypair
+    ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C gcloud_instance_key -N ''
+    #N '' means no passphrase but can be added for additional security
+}
+
+
 terraform_install_check () {
     if [ "$TERRAFORM_CHECK" ]; then
 
