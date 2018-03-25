@@ -14,7 +14,7 @@ accounts_json_check () {
     echo "The file account.json does not exist in the current directory but has been found in the static_IP directory"
     echo "please add file account.json to the current directory then rerun the script.. now exiting"
     sleep 5
-    exit 1
+    exit 130
     elif [[ -f account.json && ! -f static_IP/account.json ]]; then
     echo "The file account.json exist in the current directory but has not been found in the static_IP directory"
     echo "please add file account.json to the static_IP directory then rerun the script.. now exiting"
@@ -25,10 +25,12 @@ accounts_json_check () {
     echo "Please create a service account for API acess in google cloud in which an account.json file will then be created"
     echo "then add the scripts to the current directory and the tatic_IP directory and then rerun the script"
     sleep 5
-    exit 1
+    exit 130
     fi
 }
 
+
+#http://www.tldp.org/LDP/abs/html/exitcodes.html exits via ctrl +c as suggested by this article
 
 
 terraform_load_balancer_init () {
