@@ -1,3 +1,43 @@
+#!/bin/bash
+############################################
+#Global variables
+############################################
+
+TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform" -ls)
+TERRAFORM_VERSION="0.11.5"
+
+terraform_install_check () {
+    if ["$TERRAFORM_CHECK"]; then
+
+cat << EOF
+############################################
+verifying Terraform installation
+############################################
+EOF
+    terraform
+
+else
+
+cat << EOF
+############################################
+Terraform binary not found assuming that 
+terraform has not been installed
+############################################
+EOF
+
+sleep 2
+
+cat << EOF
+############################################
+Installing Terraform
+############################################
+EOF
+
+wget https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_"$TERRAFORM_VERSION"_linux_amd64.zip
+sudo unzip terraform_"$TERRAFORM_VERSION"_linux_amd64.zip -d /usr/bin
+    fi
+}
+
 terraform_load_balancer_init () {
     terraform init
     terraform validate
@@ -44,6 +84,7 @@ terraform_static_global_IP_init () {
 }
 
     overall_script () {
+    terraform_install_check
     terraform_static_global_IP_init
     certifcate_creation
     terraform_load_balancer_init
