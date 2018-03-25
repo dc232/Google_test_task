@@ -3,11 +3,11 @@
 #Global variables
 ############################################
 
-TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform" -ls)
+TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform")
 TERRAFORM_VERSION="0.11.5"
 
 terraform_install_check () {
-    if ["$TERRAFORM_CHECK"]; then
+    if [ "$TERRAFORM_CHECK" ]; then
 
 cat << EOF
 ############################################
