@@ -62,21 +62,42 @@ resource "google_compute_url_map" "default" {
   }
 //}
 
+//Back end configuration
 resource "google_compute_backend_service" "default" {
   name        = "default-backend"
   port_name   = "http"
   protocol    = "HTTP"
   timeout_sec = 10
+  enable_cdn  = false
 
+    backend {
+    group = "${google_compute_instance_group_manager.foobar.instance_group}"
+  }
   health_checks = ["${google_compute_http_health_check.default.self_link}"]
 }
 
 resource "google_compute_http_health_check" "default" {
   name               = "test"
   request_path       = "/"
-  check_interval_sec = 1
-  timeout_sec        = 1
+  check_interval_sec = 5
+  timeout_sec        = 5
+  healthy_threshold = 2
+  unhealthy_threshold = 2
 }
+
+resource "google_compute_target_pool" "foobar" {
+  name = "foobar"
+}
+
+resource "google_compute_instance_group_manager" "foobar" {
+  name = "foobar"
+  zone = "us-central1-f"
+
+  instance_template  = "${google_compute_instance_template.foobar.self_link}"
+  target_pools       = ["${google_compute_target_pool.foobar.self_link}"]
+  base_instance_name = "foobar"
+}
+
 
 
 //https://www.terraform.io/docs/providers/google/r/compute_global_forwarding_rule.html
