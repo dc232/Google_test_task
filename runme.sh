@@ -6,13 +6,13 @@ overall_script () {
 }
 
 accounts_json_check () {
-    if [ -f account.json && -f static_IP/account.json ]; then
+    if [[ -f account.json && -f static_IP/account.json ]]; then
     echo "Account.json exists both in the current directory and in the static_ip directory "
     sleep 2
-    elif [ ! -f account.json && -f static_IP/account.json ]; then
+    elif [[ ! -f account.json && -f static_IP/account.json ]]; then
     echo "The file account.json does not exist in the current directory but has been found in the static_IP directory"
     sleep 2
-    elif [ -f account.json && ! -f static_IP/account.json ]; then
+    elif [[ -f account.json && ! -f static_IP/account.json ]]; then
     echo "The file account.json exist in the current directory but has not been found in the static_IP directory"
     sleep 2
     else
