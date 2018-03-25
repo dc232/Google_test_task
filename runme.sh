@@ -53,10 +53,9 @@ and the load balancer
 EOF
 sleep 2
 
-GLOBAL_LOAD_BALANCER_IP=$(grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"  ../static_IP/static_IP_build.log)
-
 mkdir ssl_cert
  cd ssl_cert
+ GLOBAL_LOAD_BALANCER_IP=$(grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"  ../static_IP/static_IP_build.log)
  sudo openssl genrsa -out private.key 2048 #private key does not ask us about subject params
  openssl req -new -key private.key -out example.csr -subj '/C=UK/ST=London/L=London/CN='$GLOBAL_LOAD_BALANCER_IP''
  sudo openssl x509 -req -days 365 -in example.csr -signkey private.key -out certificate.crt #certificate file
