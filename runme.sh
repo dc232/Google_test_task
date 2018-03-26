@@ -47,6 +47,7 @@ Add_ssh_keys_ssh_agent () {
     sleep 2
     echo "Adding fail safe incase private key doesn't corectly get added by agent"
     sleep 2
+    cp vm_instance_keypair/gcloud_instance_key.pub ~/.ssh/
     cp vm_instance_keypair/gcloud_instance_key ~/.ssh/
     echo "To ensure that traffic on port 22 (SSH) is sent through to google"
     sleep 2

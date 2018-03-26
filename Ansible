@@ -1,4 +1,9 @@
 #!/bin/bash
+###############################
+#GLOBAL VARS
+###############################
+GMAIL_ACCOUNT_USERNAME_FOR_SSH=$(grep GMAIL_ACCOUNT_USERNAME_FOR_SSH runme.sh | sed '2,3d' | sed 's/GMAIL_ACCOUNT_USERNAME_FOR_SSH=//' | sed 's/"//g')
+
 GCE_ini_py_prerequisites() {
     cat << EOF
 #############################
@@ -27,6 +32,13 @@ the Ansible file and
 then adjust the timmers as 
 needed
 #############################
+EOF
+
+cat << EOF
+##################################
+Please also check that the SSL
+keys are indeed placed in ~/.ssh/
+##################################
 EOF
 
 sleep 10
@@ -66,9 +78,22 @@ via dynamic inventory file
 gce.py
 #############################
 EOF
-ansible all -i gce.py -m setup
+
+sleep 2
+
+   cat << EOF
+#############################
+Displaying found 
+username from runme.sh
+#############################
+EOF
+echo $GMAIL_ACCOUNT_USERNAME_FOR_SSH
+sleep 2
+
+ansible all -i gce.py -m setup -u $GMAIL_ACCOUNT_USERNAME_FOR_SSH --verbose
 #http://docs.ansible.com/ansible/latest/setup_module.html
 #explains that -m setup gathers facts about the machine
+#http://docs.ansible.com/ansible/latest/guide_gce.html gce connect guide
 }
 
 
