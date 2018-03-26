@@ -34,9 +34,13 @@ sleep 4
 ssh_key_creation_for_instances () {
     mkdir vm_instance_keypair
     ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C $GMAIL_ACCOUNT_USERNAME_FOR_SSH -N ''
+    #N '' means no passphrase but can be added for additional security
     echo "Restricting acess to private key IE setting readonly acess"
     sleep 2
     chmod 400 vm_instance_keypair/gcloud_instance_key
+}
+
+Add_ssh_keys_ssh_agent () {
     echo "Starting SSH agent to manage SSH keys"
     sleep 2
     eval ssh-agent $SHELL
@@ -44,9 +48,9 @@ ssh_key_creation_for_instances () {
     echo "Adding private ssh key into the user agent so that it can be used for all ssh commands for authentication"
     #ssh-add command mentioned in https://cloud.google.com/compute/docs/instances/connecting-advanced#sshbetweeninstances
     ssh-add vm_instance_keypair/gcloud_instance_key
-    #N '' means no passphrase but can be added for additional security
     #more security stuff whcih can be talked about https://cloud.google.com/solutions/connecting-securely#port-forwarding-over-ssh
 }
+
 
 terraform_install_check () {
     if [ "$TERRAFORM_CHECK" ]; then
@@ -132,6 +136,7 @@ terraform_static_global_IP_init () {
     certifcate_creation
     terraform_load_balancer_init
     Ansible_Integration
+    Add_ssh_keys_ssh_agent
 }
 
 accounts_json_check () {
