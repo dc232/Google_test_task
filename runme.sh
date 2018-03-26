@@ -5,7 +5,7 @@
 
 TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform")
 TERRAFORM_VERSION="0.11.5"
-GMAIL_ACCOUNT_USERNAME_FOR_SSH="techspec214"
+GMAIL_ACCOUNT_USERNAME_FOR_SSH=techspec214
 
 #see https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys for more detials on how to set up the ssh keys
 #it mentions that the comment is the username
