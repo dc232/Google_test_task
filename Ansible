@@ -49,9 +49,19 @@ GCE_ini_Config () {
    sudo echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc
    source  . ~/.bashrc
 
+
    cat << EOF
 #############################
-Evaluating Connection to hosts
+Checking that gce.py dynamic
+inventory script is working
+#############################
+EOF
+./gce.py --list
+
+   cat << EOF
+#############################
+Evaluating Connection to
+google hosts
 via dynamic inventory file
 gce.py
 #############################
