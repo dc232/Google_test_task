@@ -127,6 +127,7 @@ terraform_static_global_IP_init () {
 
     overall_script () {
     terraform_install_check
+    ssh_key_creation_for_instances
     terraform_static_global_IP_init
     certifcate_creation
     terraform_load_balancer_init
