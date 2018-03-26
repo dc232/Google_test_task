@@ -93,8 +93,8 @@ in gce.py
 #############################
 EOF
 $PYTHON_CHECK
-sed -i '1d' gce.py
 sed -i.bak '2i #!'$PYTHON_CHECK'' gce.py
+sed -i '1d' gce.py
 
 else
 cat << EOF
@@ -124,8 +124,8 @@ in gce.py
 #############################
 EOF
 $PYTHON_CHECK
-sed -i '1d' gce.py
 sed -i.bak '2i #!'$PYTHON_CHECK'' gce.py
+sed -i '1d' gce.py
 fi
 }
 
