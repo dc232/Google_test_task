@@ -7,7 +7,8 @@ variable "region_zone" {
 }
 
 variable "project_name" {
-  description = "smart-radio-198517"
+  description = "Name of the project otherwise known as project ID"
+  default = "smart-radio-198517"
 }
 
 variable "public_key_path" {

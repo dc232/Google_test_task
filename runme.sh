@@ -30,6 +30,7 @@ ssh_key_creation_for_instances () {
     #ssh-add command mentioned in https://cloud.google.com/compute/docs/instances/connecting-advanced#sshbetweeninstances
     ssh-add vm_instance_keypair/gcloud_instance_key
     #N '' means no passphrase but can be added for additional security
+    #more security stuff whcih can be talked about https://cloud.google.com/solutions/connecting-securely#port-forwarding-over-ssh
 }
 
 terraform_install_check () {
