@@ -39,9 +39,9 @@ resource "google_compute_instance_template" "foobar" {
   metadata {
     ssh-keys = "${file("${var.public_key_path}")}"
     startup-script = <<SCRIPT
-apt get update 
-apt install nginx -y
-service nginx start
+sudo apt update 
+sudo apt install nginx -y
+sudo systemctl start nginx
 SCRIPT
   }
 

@@ -45,6 +45,17 @@ Add_ssh_keys_ssh_agent () {
     sleep 2
     eval ssh-agent $SHELL
     sleep 2
+    echo "Adding fail safe incase private key doesn't corectly get added by agent"
+    sleep 2
+    cp vm_instance_keypair/gcloud_instance_key ~/.ssh/
+    echo "To ensure that traffic on port 22 (SSH) is sent through to google"
+    sleep 2
+    echo "Go to Google compute engine --> metadata --> SSH cats and cat out the puplic key m_instance_keypair/gcloud_instance_key.pub as is and then copy and paste as needed"
+    sleep 3
+    echo "To acess instance type ssh -i ~/.ssh/gcloud_instance_key $GMAIL_ACCOUNT_USERNAME_FOR_SSH@google_compute_vm_instance_exsternal_ip"
+    sleep 2
+    echo "Please note this is a temporary means of acess untill ansible script works, also I will be looking into a bastion server in the coming days"
+    sleep 2
     echo "Adding private ssh key into the user agent so that it can be used for all ssh commands for authentication"
     #ssh-add command mentioned in https://cloud.google.com/compute/docs/instances/connecting-advanced#sshbetweeninstances
     ssh-add vm_instance_keypair/gcloud_instance_key
