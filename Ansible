@@ -259,6 +259,17 @@ EOF
 sleep 2
 pip_check_function
 sleep 2
+
+cat << EOF
+#############################
+checking to see if python
+is installed
+#############################
+EOF
+sleep 2
+python_check
+
+
 else
 
 cat << EOF
