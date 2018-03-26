@@ -1,6 +1,5 @@
 #!/bin/bash
-GCE_ini_Config () {
-
+GCE_ini_py_prerequisites() {
     cat << EOF
 #############################
 Please ensure that you 
@@ -17,13 +16,26 @@ sleep 3
 Please ensure that you 
 set the export path to
 the gce.ini file
+i.e se the location of where the file is
 before running the 
-script
+script or it will fail to initalise 
+with gce.py
+to exit the script to set the 
+variables
+press ctrl+c and vi into 
+the Ansible file and 
+then adjust the timmers as 
+needed
 #############################
 EOF
 
-sleep 2
+sleep 10
 
+}
+
+
+
+GCE_ini_Config () {
 
     SERVICEACCOUNTEMAIL=$(cat account.json | grep email | sed 's/"//g' | sed 's/://' | sed 's/client_email//' | tr -d ' ' | tr -d ,)
     JASONFILELOCATION="account.json"
@@ -145,6 +157,8 @@ EOF
 sleep 2
 
 pip list | grep apache-libcloud
+
+GCE_ini_py_prerequisites
 
 cat << EOF 
 #######################################
@@ -268,7 +282,6 @@ is installed
 EOF
 sleep 2
 python_check
-
 
 else
 
