@@ -5,10 +5,30 @@
 
 TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform")
 TERRAFORM_VERSION="0.11.5"
+GMAIL_ACCOUNT_USERNAME_FOR_SSH="techspec214"
+
+#see https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys for more detials on how to set up the ssh keys
+#it mentions that the comment is the username
+#in this case we have used project-wide-ssh keys for easier management
+#otherwise if we used instance-level public ssh keys 
+#when the loadbalancer hits 40% and creates a new instance 
+#we would not be able to get access to it becuase the key has already been used
+#by another instance
+#this would mean that the key which was created would only be usefull for 1 instane and not the other
 
 ssh_key_creation_for_instances () {
     mkdir vm_instance_keypair
-    ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C gcloud_instance_key -N ''
+    ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C $GMAIL_ACCOUNT_FOR_SSH -N ''
+    echo "Restricting acess to private key IE setting readonly acess"
+    sleep 2
+    chmod 400 vm_instance_keypair/gcloud_instance_key
+    echo "Starting SSH agent to manage SSH keys"
+    sleep 2
+    eval ssh-agent $SHELL
+    sleep 2
+    echo "Adding private ssh key into the user agent so that it can be used for all ssh commands for authentication"
+    #ssh-add command mentioned in https://cloud.google.com/compute/docs/instances/connecting-advanced#sshbetweeninstances
+    ssh-add vm_instance_keypair/gcloud_instance_key
     #N '' means no passphrase but can be added for additional security
 }
 
