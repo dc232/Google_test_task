@@ -5,7 +5,7 @@
 
 TERRAFORM_CHECK=$(find /usr/bin -type f -name "terraform")
 TERRAFORM_VERSION="0.11.5"
-GMAIL_ACCOUNT_USERNAME_FOR_SSH=techspec214
+GMAIL_ACCOUNT_USERNAME_FOR_SSH="techspec214"
 
 #see https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys for more detials on how to set up the ssh keys
 #it mentions that the comment is the username
@@ -33,7 +33,7 @@ sleep 4
 
 ssh_key_creation_for_instances () {
     mkdir vm_instance_keypair
-    ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C $GMAIL_ACCOUNT_FOR_SSH -N ''
+    ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C $GMAIL_ACCOUNT_USERNAME_FOR_SSH -N ''
     echo "Restricting acess to private key IE setting readonly acess"
     sleep 2
     chmod 400 vm_instance_keypair/gcloud_instance_key
