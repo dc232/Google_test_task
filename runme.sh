@@ -16,6 +16,21 @@ GMAIL_ACCOUNT_USERNAME_FOR_SSH="techspec214"
 #by another instance
 #this would mean that the key which was created would only be usefull for 1 instane and not the other
 
+Ansible_Integration () {
+echo "Adding Ansible integration via the Ansible Installation script"
+sleep 2
+
+cat << EOF
+This script is desighned for 
+automation to quit this process 
+press ctrl+c and then comment 
+out thie funtion
+EOF
+
+sleep 4
+    ./Ansible
+}
+
 ssh_key_creation_for_instances () {
     mkdir vm_instance_keypair
     ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C $GMAIL_ACCOUNT_FOR_SSH -N ''
@@ -115,6 +130,7 @@ terraform_static_global_IP_init () {
     terraform_static_global_IP_init
     certifcate_creation
     terraform_load_balancer_init
+    Ansible_Integration
 }
 
 accounts_json_check () {
