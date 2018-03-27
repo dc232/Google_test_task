@@ -268,8 +268,9 @@ resource "google_compute_autoscaler" "foobar" {
 The code above executes an autoscaling policy in which the minimum number of servers in the autoscaling group in this case in the instance group "foobar" is 1 and when the cpu on the instance hits 40% another f1-micro instance is created via the instance template.
 The cooldown_period period option is the wait between a change in the cpu utilization. This is double the time the instances take to start up which is usually 30 seconds.
 
-From the code above we can therefore say that the objective 
+From the code above we can therefore say that the following objectives have been completed
 Server machines scale at 40% cpu has been completed
+Minimum size of server auto-scaling group = 1 and max = 2
 
 ## Security
 
