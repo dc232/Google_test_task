@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 This project is designed to build a load balancer through terraform orchestration and also allows for the management of Google VM’s via external interface IP address.
 It should be known that I have had only 1 week to get myself familiar with GCP and its concepts and I am very much a novice when it comes to GCP.
 However I have not let this deter me from attempting to complete the project.
