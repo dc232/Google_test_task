@@ -159,9 +159,8 @@ On top of this if the server machines hit 40% then the instance template will th
 This therefore means that the objectives
 Use f1-micro instances has been achived
 
-a series of actions or steps taken in order to achieve a particular end.
 
-
+On top of this there is a startup script witin the instance template as outlined below
 
 ```
     startup-script = <<SCRIPT
@@ -173,6 +172,31 @@ sudo sed -i '22a bar' /var/www/html/index.nginx-debian.html
 SCRIPT
 ```
 
+The excerpt above essentially allows for the creation of an nginx server in which the lines foo and bar are added to the index.nginx-debian.html page the reason for this is do that when a GET request is sent to the page 
+
+a series of actions or steps taken in order to achieve a particular end.
+
+
+# Checking for the correct headers
+```
+curl -I --insecure http://Loadbalancer-IP-address
+
+HTTP/1.1 200 OK
+Date: Sun, 16 Oct 2016 23:37:15 GMT
+Server: Apache/2.4.23 (Unix)
+X-Powered-By: PHP/5.6.24
+Connection: close
+Content-Type: text/html; charset=UTF-8
+```
+
+(insert pics of what happens when using without --insecure)
+
+when we dont use --insecure as the pciture above explain errors sre seen
 
 ## Autoscaling
+Autoscaling is handled by the Auto_scaler.tf file
+in which the following code is run 
+(insert code)
+The code above (explain what the code above does)
+From the code above we can therefore say that the objective (say obective) has been completed
 ## Security
