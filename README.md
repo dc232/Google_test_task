@@ -245,10 +245,32 @@ It is therefore possible to suggest that the correct headers are being returned
 
 ## Autoscaling
 Autoscaling is handled by the Auto_scaler.tf file
-in which the following code is run 
-(insert code)
-The code above (explain what the code above does)
-From the code above we can therefore say that the objective (say obective) has been completed
+in which the following code is run
+
+```
+resource "google_compute_autoscaler" "foobar" {
+  name   = "scaler"
+  zone   = "${var.region_zone}"
+  target = "${google_compute_instance_group_manager.foobar.self_link}"
+
+  autoscaling_policy = {
+    max_replicas    = 2
+    min_replicas    = 1
+    cooldown_period = 60
+
+    cpu_utilization {
+      target = 0.4
+    }
+  }
+}
+```
+
+The code above executes an autoscaling policy in which the minimum number of servers in the autoscaling group in this case in the instance group "foobar" is 1 and when the cpu on the instance hits 40% another f1-micro instance is created via the instance template.
+The cooldown_period period option is the wait between a change in the cpu utilization. This is double the time the instances take to start up which is usually 30 seconds.
+
+From the code above we can therefore say that the objective 
+Server machines scale at 40% cpu has been completed
+
 ## Security
 
 a series of actions or steps taken in order to achieve a particular end.
