@@ -30,9 +30,24 @@ However I have not let this deter me from attempting to complete the project.
          1. The Link explains that a service account is a special account used by GCE instances tointeract with other google Plaform API's. Service credentials can be used to allow applications to authorize themselves to a set of APIs and perform actions within the permissions granted to the service account and virtual machine instance.
          
      1. For more information about API Credentials, access, security, and identity click on this link ttps://support.google.com/cloud/answer/6158857?hl=en
-         
-5. Move the account.json file to the project directory and also to the  static_IP/ folder
-6. The project comes with 2 files, one called runme and the other ansible
+     
+5.	Then git clone https://github.com/dc232/Google_test_task.git
+6. The project comes with 2 executable files, one called runme and the other ansible
+7. Move the account.json file to the project directory (Google_test_task) and also to the static_IP/ folder
+     1.  Modify the variable GMAIL_ACCOUNT_USERNAME_FOR_SSH as this needed to create a username for the SSH key setup under metada in GCP. the username is added as a comment to the puplic key in this case named gcloud_instance_key.pub located in the vm_instance_keypair folder upon creation as seen in the snippet below.
+``` 
+ssh_key_creation_for_instances () {
+    mkdir vm_instance_keypair
+    ssh-keygen -t rsa -b 4906 -f vm_instance_keypair/gcloud_instance_key -C $GMAIL_ACCOUNT_USERNAME_FOR_SSH -N ''
+    #N '' means no passphrase but can be added for additional security
+    echo "Restricting acess to private key IE setting readonly acess"
+    sleep 2
+    chmod 400 vm_instance_keypair/gcloud_instance_key
+}
+
+``` 
+8. The runme file also executes the Ansible file to install 
+Bullet list Ansible
      1.  To just build just the load balancer use vi runme and then disable the nested function Ansible_Integration as seen below
 
 ```  
@@ -47,15 +62,6 @@ However I have not let this deter me from attempting to complete the project.
 }
 ```
       
-      
-      
-
-   
-   1. 
-2.	Git clone https://github.com/dc232/Google_test_task.git
-
-
-
 ## Loadbalancer
 ## Autoscaling
 ## Security
