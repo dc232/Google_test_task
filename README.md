@@ -8,7 +8,7 @@ However I have not let this deter me from attempting to complete the project.
 ## The Requirements of Project
 
  - [x] Create a new Google Platform Project 
- - [x] Use f1-micor instances
+ - [x] Use f1-micro instances
  - [ ] Ensure the enviroment is completely secure
  - [x] Use Nginx/Apache or SimpleHTTPServer
  - [x] Return the correct headers
