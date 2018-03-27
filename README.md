@@ -92,7 +92,7 @@ To setup variables in the Ansible script ```vi Ansible```
 Then change ```GCEZONE``` varaible variable to reflect where you are erecting the infrastructure
 
 ## Ansible script important message 
-1. Please ensure that you set the export path to the gce.ini file i.e se the location of where the file is before running the script or it will fail to initalise with gce.py
+1. Please ensure that you set the export path to the gce.ini file i.e set the location of where the file is before running the script or it will fail to initalise with gce.py
 
    1. To do this
         - Type ```pwd``` and make a note of the current working directory path
