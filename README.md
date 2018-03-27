@@ -101,6 +101,17 @@ Then change ```GCEZONE``` varaible variable to reflect where you are erecting th
         - Modify sudo ```echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc``` to relfect where the file gce.ini is on the system
         - Adjust script timmers as needed
         
+2. Please ensure that you cat the public key and add this to GCE 
+   1. To do this
+         - cat vm_instance_keypair/gcloud_instance_key.pub
+         - Copy the key information exactly
+         - Click on Compute Engine
+         - click on Metadata
+         - Click on SSH Keys
+         - Paste the key information 
+         - Verify the puplic entered into GCE is the same as that presented in the console
+         
+Please Note: In the futre I plan to use a terraform template to add the public key to GCE automatically. This is still being reaserched to find out how to do this
 
 ## Terraform variable setup
 Variables to setup terraform can found in the file variables.tf and are set with the following paramters
