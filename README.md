@@ -50,7 +50,9 @@ However I have not let this deter me from attempting to complete the project.
  
 3. Move the newly created account.json file to the project directory (Google_test_task) and also to the static_IP/ folder
 
-     1. In runme modify the variable ```GMAIL_ACCOUNT_USERNAME_FOR_SSH``` as this needed to create a username for the SSH key setup under metada in GCP. the username is added as a comment to the puplic key in this case named gcloud_instance_key.pub located in the vm_instance_keypair folder upon creation as seen in the snippet below.
+## runme script important variables and functions
+1. In runme modify the variable ```GMAIL_ACCOUNT_USERNAME_FOR_SSH``` as this needed to create a username for the SSH key setup under metada in GCP. the username is added as a comment to the puplic key in this case named gcloud_instance_key.pub located in the vm_instance_keypair folder upon creation as seen in the snippet below.
+     
 ``` 
 ssh_key_creation_for_instances () {
     mkdir vm_instance_keypair
@@ -64,7 +66,7 @@ ssh_key_creation_for_instances () {
 ``` 
 
 
-   4. Also within runme to just build just the load balancer and not ansible or its subsequent components use ```vi runme``` and then disable the nested function Ansible_Integration as seen below
+2. Also within runme to just build just the load balancer and not ansible or its subsequent components use ```vi runme``` and then disable the nested function Ansible_Integration as seen below
 
 ```  
        overall_script () {
@@ -77,7 +79,35 @@ ssh_key_creation_for_instances () {
     Add_ssh_keys_ssh_agent
 }
 ```
-      
+
+## Ansible script important variables
+
+
+
+## Terraform variable setup
+Variables to setup terraform can found in the file variables.tf and are set with the following paramters
+Please ```vi variables.tf``` as needed to update the variables to reflect the enviroment
+
+```
+variable "region" {
+  default = "us-central1"
+}
+
+variable "region_zone" {
+  default = "us-central1-f"
+}
+
+variable "project_name" {
+  description = "Name of the project otherwise known as project ID"
+  default = "smart-radio-198517"
+}
+
+variable "public_key_path" {
+  description = "Path to file containing public key"
+  default = "vm_instance_keypair/gcloud_instance_key.pub"
+}
+```
+
 ## Loadbalancer
 ## Autoscaling
 ## Security
