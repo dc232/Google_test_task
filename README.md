@@ -88,7 +88,7 @@ ssh_key_creation_for_instances () {
 ```
 
 ## Ansible script important variables
-To setup variables in the Ansible script vi Anasible 
+To setup variables in the Ansible script ```vi Ansible```
 Then change ```GCEZONE``` varaible variable to reflect where you are erecting the infrastructure
 
 ## Ansible script important message 
@@ -96,8 +96,8 @@ Then change ```GCEZONE``` varaible variable to reflect where you are erecting th
 
    1. To do this
         - Type ```pwd``` and make a note of the current working directory path
-        - vi Ansible
-        - Search for the function GCE_ini_Config
+        - ```vi Ansible```
+        - Search for the function ```GCE_ini_Config```
         - Modify sudo ```echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc``` to relfect where the file gce.ini is on the system
         - Adjust script timmers as needed
         
