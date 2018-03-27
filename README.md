@@ -27,14 +27,28 @@ However I have not let this deter me from attempting to complete the project.
       1. Once at the screen click on Create credentials --> Service account key --> Create Service account and then select Compute Engine default service account if avalible if not then click on New service account and then enter a name for the Service account and then click on next, select the role as Compute Engine --> Compute Admin and then click on create. This will then create a .json file save this file as account.json
       
       1. For more information about service account click ont the link https://cloud.google.com/compute/docs/access/service-accounts
-         1. The Link explains that a service account is a special account used by GCE instances tointeract with other google Plaform API's. Service credentials can be used to allow applications to authorize themselves to a set of APIs and perform actions within the permissions granted to the service account and virtual machine instance.
+         1. The Link explains that a service account is a special account used by GCE instances to interact with other google Plaform API's. Service credentials can be used to allow applications to authorize themselves to a set of APIs and perform actions within the permissions granted to the service account and virtual machine instance.
          
      1. For more information about API Credentials, access, security, and identity click on this link ttps://support.google.com/cloud/answer/6158857?hl=en
      
 5.	Then git clone https://github.com/dc232/Google_test_task.git
-6. The project comes with 2 executable files, one called runme and the other ansible
-7. Move the account.json file to the project directory (Google_test_task) and also to the static_IP/ folder
-     1.  Modify the variable GMAIL_ACCOUNT_USERNAME_FOR_SSH as this needed to create a username for the SSH key setup under metada in GCP. the username is added as a comment to the puplic key in this case named gcloud_instance_key.pub located in the vm_instance_keypair folder upon creation as seen in the snippet below.
+6. The project comes with 2 executable files, one called runme and the other Ansible
+     1.  The runme file
+          - checks that Teraform is installed
+          - Provisions the SSH Keys needed to acess the instances over the exsternal IP address
+          - creates a self sighned certifcate for use with the load balancer
+          - Uses the Variable ```COMPUTED_IP_ADDRESS_FROM_TERRAFORM_TFSTATE``` to grab the IP address of the Global load balancer so that it can be used in the forwarding rules
+     
+     1. The runme file also executes the Ansible file to install 
+        - python-pip
+        - Python
+        - Python3
+        - Ansible
+        - apache-libcloud (GCE dynamic inventory plugin)
+ 
+7. Move the newly created account.json file to the project directory (Google_test_task) and also to the static_IP/ folder
+
+     1. In runme modify the variable ```GMAIL_ACCOUNT_USERNAME_FOR_SSH``` as this needed to create a username for the SSH key setup under metada in GCP. the username is added as a comment to the puplic key in this case named gcloud_instance_key.pub located in the vm_instance_keypair folder upon creation as seen in the snippet below.
 ``` 
 ssh_key_creation_for_instances () {
     mkdir vm_instance_keypair
@@ -46,9 +60,9 @@ ssh_key_creation_for_instances () {
 }
 
 ``` 
-8. The runme file also executes the Ansible file to install 
-Bullet list Ansible
-     1.  To just build just the load balancer use vi runme and then disable the nested function Ansible_Integration as seen below
+
+
+   8. Also within runme to just build just the load balancer and not ansible or its subsequent components use ```vi runme``` and then disable the nested function Ansible_Integration as seen below
 
 ```  
        overall_script () {
