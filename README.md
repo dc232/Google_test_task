@@ -8,7 +8,7 @@ However I have not let this deter me from attempting to complete the project.
 The runme and Ansible scripts included in this project have been desighned with Ubuntu 16.04 in mind
 
 ## The Requirements of Project
-
+ - [x] HTTP accepts a GET request to https://Loadbalancer-IP-address and return {foo:bar}
  - [x] Create a new Google Platform Project 
  - [x] Use f1-micro instances
  - [ ] Ensure the enviroment is completely secure
@@ -172,14 +172,17 @@ sudo sed -i '22a bar' /var/www/html/index.nginx-debian.html
 SCRIPT
 ```
 
-The excerpt above essentially allows for the creation of an nginx server in which the lines foo and bar are added to the index.nginx-debian.html page the reason for this is do that when a GET request is sent to the page 
+The excerpt above essentially allows for the creation of an nginx server in which the lines foo and bar are added to the index.nginx-debian.html page the reason for this is so that when a GET request is sent to the page 
 
 a series of actions or steps taken in order to achieve a particular end.
 
 
+## Checking to see if the HTTP will acept a GET request to https://Loadbalancer-IP-address and return {foo:bar}
+curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://Loadbalancer-IP-address
+
 # Checking for the correct headers
 ```
-curl -I --insecure http://Loadbalancer-IP-address
+curl -I --insecure https://Loadbalancer-IP-address
 
 HTTP/1.1 200 OK
 Date: Sun, 16 Oct 2016 23:37:15 GMT
