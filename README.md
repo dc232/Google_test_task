@@ -103,7 +103,7 @@ Then change ```GCEZONE``` varaible variable to reflect where you are erecting th
         
 2. Please ensure that you cat the public key and add this to GCE 
    1. To do this
-         - cat vm_instance_keypair/gcloud_instance_key.pub
+         - ```cat vm_instance_keypair/gcloud_instance_key.pub```
          - Copy the key information exactly
          - Click on Compute Engine
          - click on Metadata
