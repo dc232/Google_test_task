@@ -269,8 +269,8 @@ The code above executes an autoscaling policy in which the minimum number of ser
 The cooldown_period period option is the wait between a change in the cpu utilization. This is double the time the instances take to start up which is usually 30 seconds.
 
 From the code above we can therefore say that the following objectives have been completed
-Server machines scale at 40% cpu has been completed
-Minimum size of server auto-scaling group = 1 and max = 2
+- Server machines scale at 40% cpu has been completed
+- Minimum size of server auto-scaling group = 1 and max = 2
 
 ## Security
 
