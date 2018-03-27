@@ -128,5 +128,22 @@ variable "public_key_path" {
 Please note that in the futre I will incoperate the deafult arguments such as ```"smart-radio-198517"``` into the runme script via variables so that the infrastructure can be provisioned via 2 script
 
 ## Overall Load balancer archetechture 
+The overall load balancer is described to be
+
+![basic-http-load-balancer](https://user-images.githubusercontent.com/11795947/37981742-6a77da3c-31e6-11e8-9e25-0521f332ddfa.jpg)
+
+via the runme the following terraform files are run
+- static_IP/Secrets.tf
+- static_IP/StaticIP.tf
+- variables.tf
+- Secrets.tf
+- Auto_scaler.tf
+- Backend.tf
+- load_balancer.tf
+- Instance_template.tf
+- Instance_group_manager.tf
+
+The Contents of the static folder is run 1st as a Global compute address is needed for the load balancer this was chosen as it provides 1 single ip addres in which the hosts and path rules can then interact with the backend where the instances are attached.
+
 ## Autoscaling
 ## Security
