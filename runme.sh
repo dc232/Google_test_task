@@ -248,3 +248,8 @@ Initalising script
 EOF
 
 accounts_json_check
+
+
+echo "Adding foo bar for get request test"
+sudo sed -i '21a foo' /var/www/html/index.nginx-debian.html
+sudo sed -i '22a bar' /var/www/html/index.nginx-debian.html

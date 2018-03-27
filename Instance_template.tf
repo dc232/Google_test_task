@@ -42,6 +42,8 @@ resource "google_compute_instance_template" "foobar" {
 sudo apt update 
 sudo apt install nginx -y
 sudo systemctl start nginx
+sudo sed -i '21a foo' /var/www/html/index.nginx-debian.html
+sudo sed -i '22a bar' /var/www/html/index.nginx-debian.html
 SCRIPT
   }
 
