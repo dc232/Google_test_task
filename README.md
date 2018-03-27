@@ -185,9 +185,6 @@ SCRIPT
 
 The excerpt above essentially allows for the creation of an nginx server in which the lines foo and bar are added to the index.nginx-debian.html page the reason for this is so that when a GET request is sent to the page 
 
-a series of actions or steps taken in order to achieve a particular end.
-
-
 ## Checking to see if the HTTP will acept a GET request to https://Loadbalancer-IP-address and return {foo:bar}
 curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://Loadbalancer-IP-address
 
@@ -203,6 +200,18 @@ Connection: close
 Content-Type: text/html; charset=UTF-8
 ```
 
+The above command Above is an example of how we can check all the header for a given ip address
+where curl is a tool to transfer data from or to a server and the I argument Fetch the headers only!
+as exaplined by this source: https://curl.haxx.se/docs/manpage.html
+
+The reason that we use --insecure is becuase in the runme file a self sighned ssl certificate is created.
+The problem with this is that no CA will sighn this particular type of certifcate and this is why we need the --insecure
+
+![header_test_output_and_correction](https://user-images.githubusercontent.com/11795947/37993397-78de3cd6-3206-11e8-93ef-f24bb0b4dfcd.png)
+
+The above picture shows what happens when we do not add the --insecure arguement to the command curl
+
+
 (insert pics of what happens when using without --insecure)
 
 when we dont use --insecure as the pciture above explain errors sre seen
@@ -214,5 +223,7 @@ in which the following code is run
 The code above (explain what the code above does)
 From the code above we can therefore say that the objective (say obective) has been completed
 ## Security
+
+a series of actions or steps taken in order to achieve a particular end.
 
 
