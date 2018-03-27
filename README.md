@@ -5,7 +5,7 @@ It should be known that I have had only 1 week to get myself familiar with GCP a
 
 However I have not let this deter me from attempting to complete the project.
 
-The runme and Ansible scripts included in this project have been desighned with Ubuntu 16.04 in mind
+The runme and Ansible scripts included in this project have been designed with Ubuntu 16.04 in mind
 
 ## The Requirements of Project
  - [x] HTTP accepts a GET request to https://Loadbalancer-IP-address and return {foo:bar}
@@ -45,7 +45,7 @@ The runme and Ansible scripts included in this project have been desighned with 
      1.  The runme file
           - Checks that Teraform is installed
           - Provisions the SSH Keys needed to acess the instances over the exsternal IP address
-          - Creates a self sighned certifcate for use with the load balancer
+          - Creates a self signed certifcate for use with the load balancer
           - Uses the Variable ```COMPUTED_IP_ADDRESS_FROM_TERRAFORM_TFSTATE``` to grab the IP address of the Global load balancer so that it can be used in the forwarding rules
      
      1. The runme file also executes the Ansible file to install 
@@ -191,30 +191,57 @@ curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/j
 # Checking for the correct headers
 ```
 curl -I --insecure https://Loadbalancer-IP-address
-
-HTTP/1.1 200 OK
-Date: Sun, 16 Oct 2016 23:37:15 GMT
-Server: Apache/2.4.23 (Unix)
-X-Powered-By: PHP/5.6.24
-Connection: close
-Content-Type: text/html; charset=UTF-8
 ```
 
 The above command Above is an example of how we can check all the header for a given ip address
-where curl is a tool to transfer data from or to a server and the I argument Fetch the headers only!
+where curl is a tool to transfer data from or to a server and the I argument Fetches the headers only!
 as exaplined by this source: https://curl.haxx.se/docs/manpage.html
 
-The reason that we use --insecure is becuase in the runme file a self sighned ssl certificate is created.
-The problem with this is that no CA will sighn this particular type of certifcate and this is why we need the --insecure
+The reason that we use --insecure is becuase in the runme file a self signed ssl certificate is created.
+The problem with this is that no CA will sign this particular type of certifcate and this is why we need the --insecure
 
 ![header_test_output_and_correction](https://user-images.githubusercontent.com/11795947/37993397-78de3cd6-3206-11e8-93ef-f24bb0b4dfcd.png)
 
-The above picture shows what happens when we do not add the --insecure arguement to the command curl
+The above picture shows what happens when we do not add the --insecure arguement to the command curl. As can be seen the certifcate verfication check fails as the certifcate is seen to be untrusted.
 
+A posible soultion locally for this can be found from this source: https://stackoverflow.com/questions/21181231/server-certificate-verification-failed-cafile-etc-ssl-certs-ca-certificates-c 
+I am still reaserching this part via the link, however it is more practical to associate a hostname with the load balancer and then get the the certifcate signed by a CA such as lets encrypt.
 
-(insert pics of what happens when using without --insecure)
+The self signed certifcate code can be seen via the function ```certifcate_creation``` an excert of which can be seen below
 
-when we dont use --insecure as the pciture above explain errors sre seen
+```
+certifcate_creation () {
+    cat << EOF
+################################################
+Creating SSL Certifaces for use with terraform
+and the load balancer
+################################################
+EOF
+sleep 2
+
+mkdir ssl_cert
+ cd ssl_cert
+ GLOBAL_LOAD_BALANCER_IP=$(grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"  ../static_IP/terraform.tfstate)
+ echo 
+ sudo openssl genrsa -out private.key 2048 #private key does not ask us about subject params
+ openssl req -new -key private.key -out example.csr -subj '/C=UK/ST=London/L=London/CN='$GLOBAL_LOAD_BALANCER_IP''
+ sudo openssl x509 -req -days 365 -in example.csr -signkey private.key -out certificate.crt #certificate file
+#may need code below for later use
+#sudo openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes -subj '/C=UK/ST=London/L=London/CN=www.madboa.com'
+    #where subj means subject
+    #in means input file
+    #nodes means dont decrypt using output key 
+    #out means output file
+    #-x509 output a x509 structure instead of a cert. req.
+    #-new mewans new request
+    #source https://www.endpoint.com/blog/2014/10/30/openssl-csr-with-alternative-names-one
+    cd ..
+}
+```
+
+From the screen shot above once we add the --insecure argument we see that we get the reponse 200 OK which means that the nginx page is reachable and viewable
+
+It is therefore possible to suggest that the correct headers are being returned
 
 ## Autoscaling
 Autoscaling is handled by the Auto_scaler.tf file
