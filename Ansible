@@ -59,7 +59,7 @@ GCE_ini_Config () {
     sed -i 's/projectid/'$PROJECTID'/' gce.ini
     sed -i 's/gcezone/'$GCEZONE'/' gce.ini
    sudo echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc
-   source ~/.bashrc
+   source . ~/.bashrc
 
 
    cat << EOF
