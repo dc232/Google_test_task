@@ -307,6 +307,48 @@ The excerpt above essentially allows for the creation of an nginx server in whic
 curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://Loadbalancer-IP-address
 The following command checks the response from the load balancer in a JSON format as long as foo and bar are included in the page of the request 
 
+```
+dc@dc-HP-Pavilion-dv7-Notebook-PC:~/Desktop/CICD/test5/Google_test_task/static_IP$ curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://35.227.198.12
+HTTP/1.1 200 OK
+Server: nginx/1.10.3 (Ubuntu)
+Date: Wed, 28 Mar 2018 15:41:51 GMT
+Content-Type: text/html
+Content-Length: 620
+Last-Modified: Wed, 28 Mar 2018 06:58:49 GMT
+ETag: "5abb3d29-26c"
+Accept-Ranges: bytes
+Via: 1.1 google
+Alt-Svc: clear
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+foo
+bar
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+```
+
 # Checking for the correct headers
 ```
 curl -I --insecure https://Loadbalancer-IP-address
