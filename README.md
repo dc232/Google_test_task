@@ -483,7 +483,45 @@ In this attempt I removed the
     }
 ```
 
-component from the instance template the thinking here was that as its all Google infrastructure there is a possibility that by enabling the 
+component from the instance template the thinking here was that as its all Google infrastructure there is a possibility that by enabling the private google access component within the VPC subnet that the internal IP address of the VM instances would be able to communicate with the load balancer with the internal IP Address and thus allow for higher levels of security becuase the exasternal IP addresses would not be exposed.
+
+However 
+![internal_server_trail_to_make_the_site_more_secure](https://user-images.githubusercontent.com/11795947/38028216-256bc06c-328a-11e8-8c8b-7ab543ebce3c.png)
+
+The following message was observed as seen in the picture above even after 30 seconds had elapsed.
+
+Upon further investigation and exsperimentation the message seen in the picture below was observed
+![error_explanation](https://user-images.githubusercontent.com/11795947/38028367-9f523bc2-328a-11e8-985a-66f7539fb957.jpg)
+
+So I tried to adjust the port so that it was port 80 in which the load balancer listens on to acept the request as i was unsure which port this should be. Looking back I think that maybe if port 443 was in use this could have worked but more reaserch and exsperimentation would be needed.
+
+From trying to achieve this point what I have learned is that by desighn this project would require the following to be more secure
+- NAT Gateway between for bastion host with the internal ip addresses of the GCE VM's written within the routing table
+- where the bastion jump host to manage the back end VM's connected the NAT gateway, with either ansible or gcloud installed for configuration management
+- install Fail2ban on the bastion which according to https://www.exoscale.com/syslog/secure-your-cloud-computing-architecture-with-a-bastion/ automatically blacklists IP addresses from which any tentative brute force attack on your sshd process is detected which can be achived from the following command 
+
+```
+apt-get update && apt-get -y install fail2ban
+```
+- Limit the CIDR range of source IPs that can communicate with the bastion (I assume this is within the VPC)
+- Configure firewall rules to allow SSH traffic to private instances from only the bastion host
+- use ssh-agent forwarding instead of storing the target machine's private key on the bastion host as a way of reaching the target machine
+
+The reason why I have not been able to incoperate a bastion host is becuase I am trying to understand/reaserch the archtecture of how it would interact with the loadbalancer becuase I belive that it would need to find a way to proxy the requests to the backend.
+
+According to google a possible archetechture is 
+![bastion 1](https://user-images.githubusercontent.com/11795947/38029024-9dbff400-328c-11e8-8d6d-8807d0635002.png)
+but the picture makes no reference as to how to integrate a load balancer
+
+Interestingly also according to Google 
+You can provision instances in your network to act as trusted relays for inbound connections (bastion hosts) or network egress (NAT Gateways)
+
+This makes me think that a NAT Gateway may need to be situated between the load balancer and the bastion host
+This theory seems to be supported by this source https://stackoverflow.com/questions/26187518/gce-load-balancer-instance-without-public-ip
+
+possible architecture from https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/tree/master/examples/lb-http-nat-gateway suggests the topology seen below
+![diagram](https://user-images.githubusercontent.com/11795947/38030763-6c8e31e4-3291-11e8-8ce3-708e0bf8fd12.png)
+
 
 For more information about security in GCP refer to sources below:
 - https://cloud.google.com/docs/enterprise/best-practices-for-enterprise-organizations#networking-and-security
