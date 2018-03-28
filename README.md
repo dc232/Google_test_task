@@ -55,7 +55,11 @@ The runme and Ansible scripts included in this project have been designed with U
         - Ansible
         - apache-libcloud (GCE dynamic inventory plugin)
  
-3. Move the newly created account.json file to the project directory (Google_test_task) and also to the static_IP/ folder
+3. Move the newly created account.json file to the project directory (Google_test_task) and also to the static_IP/ folder.
+
+4. Ensure that you have set the variables for the static_IP/Secrets.tf to the same values as that of Secrets.tf in the main project folder.
+     1.  To do this
+         - Run the command ```cat variables.tf``` in the main project folder (see section marked Terraform variable setup) and copy the information accordingly to the file marked static_IP/Secrets.tf
 
 ## runme script important variables and functions
 1. In runme modify the variable ```GMAIL_ACCOUNT_USERNAME_FOR_SSH``` as this needed to create a username for the SSH key setup under metada in GCP. The username is added as a comment to the puplic key in this case named gcloud_instance_key.pub located in the vm_instance_keypair folder upon creation as seen in the snippet below.
@@ -159,6 +163,12 @@ via the runme the following terraform files are run
 Inorder to create the Load balancer through the following commands 
 terraform validate (to validate the files for any errors)
 terraform apply -auto-approve (To apply the changes to the infrastructure)
+
+Where Secrets.tf 
+- Finds and uses the account.json file
+- Sets the Project name and region
+
+
 
 ## Terraform file overview
 ### The instance template (instance_template.tf)
