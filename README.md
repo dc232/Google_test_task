@@ -390,6 +390,29 @@ From the code above we can therefore say that the following objectives have been
 - Server machines scale at 40% cpu has been completed
 - Minimum size of server auto-scaling group = 1 and max = 2
 
+## IAM Acess
+- Google Cloud Identity & Access Management (IAM) lets administrators authorize who can take action on specific resources
+- There are 2 bits if acess for this 1 is via the IAM in google cloud
+- The other is IAM for the service account
+- Setting IAM in the service account for the email address which needs acess appears to overide the IAM generic acess
+- Upon further reaserch and investigation I have concluded that IAM acess should be provisioned via the service account and permissions given accordingly in this case as the terraform files are in the compute domian I have given the relevant people access to that resource which is  compute admin for the reasons stated below
+
+- I have tried to create a custom role however the problem with this is that 
+- The permissions ```compute.httpstargetproxies*``` and ```compute.backendservice*``` are not supported in custom roles whhich is needed to make the terraform files work
+- I also tried to modify existing roles to see weather or not I could gain these permissions back but GCP does not support this and does not allow editing of existing roles
+
+### screenshots of IAM process
+![setting_iam](https://user-images.githubusercontent.com/11795947/38021318-6b035b5a-3274-11e8-829f-208f6bf54524.jpg)
+The picture above shows the overall screen of permissions in IAM, I have had to blur out the email address as they some of them have PII
+
+- For more infromation on IAM access refer the sources listed below:
+- https://cloud.google.com/iam/docs/overview#roles
+- https://cloud.google.com/terms/launch-stages
+- https://cloud.google.com/iam/
+- https://cloud.google.com/iam/docs/service-accounts
+- https://cloud.google.com/iam/reference/rest/v1/Policy
+
+
 ## Security
 
 a series of actions or steps taken in order to achieve a particular end.
