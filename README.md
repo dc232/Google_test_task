@@ -223,11 +223,17 @@ This means that every match is sent to the default service which is defined as t
 
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/url-map
 
-
-
 ### google_compute_backend_service
+- A Backend Service defines a group of virtual machines that will serve traffic for load balancing
+- An HTTP(S) load balancing backend service is a centralized service for managing backends, which in turn manage instances that handle user requests. You configure your load balancing service to route requests to your backend service. The backend service in turn knows which instances it can use, how much traffic they can handle, and how much traffic they are currently handling. In addition, the backend service monitors health checking and does not send traffic to unhealthy instances.
+
+- For more information see source https://cloud.google.com/compute/docs/load-balancing/http/backend-service
 
 ### google_compute_http_health_check
+- Manages an HTTP health check within GCE. This is used to monitor instances behind load balancers. Timeouts or HTTP errors cause the instance to be removed from the pool
+- Google Cloud Platform (GCP) health checks determine whether instances are "healthy" and available to do work. This document describes using health checks with load balancing.
+- in the case of the script there is   ```request_path       = "/"```  in other words this resource checks that the path / is still up for theese instances
+ - For more information see source: https://cloud.google.com/compute/docs/load-balancing/health-checks#legacy_health_checks
 
 ### google_compute_target_pool
 
