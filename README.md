@@ -264,10 +264,15 @@ This means that every match is sent to the default service which is defined as t
 
 ### google_compute_instance_group_manager
 - The Google Compute Engine Instance Group Manager API creates and manages pools of homogeneous Compute Engine virtual machine instances from a common instance template
+
 - A managed instance group uses an instance template to create a group of identical instances. You control a managed instance group as a single entity
+
 - When your applications require additional compute resources, managed instance groups can automatically scale the number of instances in the group
+
 - If an instance in the group stops, crashes, or is deleted by an action other than the instance groups commands, the managed instance group automatically recreates the instance so it can resume its processing tasks. The recreated instance uses the same name and the same instance template as the previous instance, even if the group references a different instance template
+
 - Managed instance groups work with load balancing services to distribute traffic to all of the instances in the group
+
 - Managed instance groups can automatically identify and recreate unhealthy instances in a group to ensure that all of the instances are running optimally
 
 Through this particular part of the script when combined with the rest of the script the following requirement is met
