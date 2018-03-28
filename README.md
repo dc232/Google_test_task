@@ -402,7 +402,7 @@ From the code above we can therefore say that the following objectives have been
 - I also tried to modify existing roles to see weather or not I could gain these permissions back but GCP does not support this and does not allow editing of existing roles
 
 ### screenshots of IAM process
-![setting_iam](https://user-images.githubusercontent.com/11795947/38021318-6b035b5a-3274-11e8-829f-208f6bf54524.jpg)
+![setting_iam](https://user-images.githubusercontent.com/11795947/38022745-3e11addc-3278-11e8-9b8d-b89ba7848e9b.jpg)
 The picture above shows the overall screen of permissions in IAM, I have had to blur out the email address as they some of them have PII
 
 - For more infromation on IAM access refer the sources listed below:
