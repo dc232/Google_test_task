@@ -205,7 +205,7 @@ For more information see source: https://cloud.google.com/compute/docs/load-bala
 As mentioned in the documentation
 - To use HTTPS or SSL load balancing, you must create at least one SSL certificate that can be used by the target proxy for the load balancer. You can configure the target proxy with up to ten SSL certificates. For each SSL certificate, you first create an SSL certificate resource. The SSL certificate resource contains the certificate information.
 
-For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/ssl-certificates
+- For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/ssl-certificates
 
 ### google_compute_url_map
 - The URL map allows for the direction of traffic based on the incoming URL
@@ -217,7 +217,7 @@ This means that every match is sent to the default service which is defined as t
 
 - Grater granularity can be achived through using path rule, theese are rules with route the traffic to a particular destination of the backend such as /video/hd/* this would be a reference to match any content witin the directory /video/hd/ as stated via the GET request to the URL should be redirected to the backend insatnce hosting that content
 
-An example from the source
+- An example from the source
 
 ![url-map-detail-1 1](https://user-images.githubusercontent.com/11795947/38011516-9c34d1f0-3255-11e8-99d6-6136d944d0ec.png)
 
