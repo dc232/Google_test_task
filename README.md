@@ -499,7 +499,7 @@ The reason why I have not been able to incoperate a bastion host is becuase I am
 
 According to google a possible archetechture is 
 ![bastion 1](https://user-images.githubusercontent.com/11795947/38029024-9dbff400-328c-11e8-8d6d-8807d0635002.png)
-but the picture makes no reference as to how to integrate a load balancer
+But the picture makes no reference as to how to integrate a load balancer
 
 Interestingly also according to Google 
 You can provision instances in your network to act as trusted relays for inbound connections (bastion hosts) or network egress (NAT Gateways)
@@ -507,18 +507,18 @@ You can provision instances in your network to act as trusted relays for inbound
 This makes me think that a NAT Gateway may need to be situated between the load balancer and the bastion host
 This theory seems to be supported by this source https://stackoverflow.com/questions/26187518/gce-load-balancer-instance-without-public-ip
 
-possible architecture from https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/tree/master/examples/lb-http-nat-gateway suggests the topology seen below
+Possible architecture from https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/tree/master/examples/lb-http-nat-gateway suggests the topology seen below
 ![diagram](https://user-images.githubusercontent.com/11795947/38030763-6c8e31e4-3291-11e8-8ce3-708e0bf8fd12.png)
 
 
 https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/blob/master/main.tf
-The link above describes a possibnle way in which a NAT gateway could be set up
-in which ```google_compute_network``` is used to create a network within the VPC
-```google_compute_route``` appears to be used for internal IP address routing
-```google_compute_firewall``` manages the firewall rules to allow all protocols
-```google_compute_address``` is used to set a static ip address via reference to a name
-There is also reference to https://github.com/GoogleCloudPlatform/terraform-google-managed-instance-group
-which appears to be attached to a managed instance group
+- The link above describes a possible way in which a NAT gateway could be set up
+- In which ```google_compute_network``` is used to create a network within the VPC
+- ```google_compute_route``` appears to be used for internal IP address routing
+- ```google_compute_firewall``` manages the firewall rules to allow all protocols
+- ```google_compute_address``` is used to set a static ip address via reference to a name
+- There is also reference to https://github.com/GoogleCloudPlatform/terraform-google-managed-instance-group
+- Which appears to be attached to a managed instance group
 
 
 ## What has been learnt from not currently achieving this objective?
