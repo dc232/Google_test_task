@@ -305,6 +305,7 @@ The excerpt above essentially allows for the creation of an nginx server in whic
 
 ## Checking to see if the HTTP will accept a GET request to https://Loadbalancer-IP-address and return {foo:bar}
 curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://Loadbalancer-IP-address
+The following command checks the response from the load balancer in a JSON format as long as foo and bar are included in the page of the request 
 
 # Checking for the correct headers
 ```
