@@ -160,27 +160,27 @@ via the runme the following terraform files are run
 - Instance_group_manager.tf
 
 Inorder to create the Load balancer through the following commands 
-terraform validate (to validate the files for any errors)
-terraform apply -auto-approve (To apply the changes to the infrastructure)
+- terraform validate (to validate the files for any errors)
+- terraform apply -auto-approve (To apply the changes to the infrastructure)
 
 ### Secrets.tf 
 - Finds and uses the account.json file
 - Sets the Project name and Region
 
 ### static_IP/StaticIP.tf
-Runs the resource google_compute_global_address and sets a global static IP address for the load balancer
+- Runs the resource google_compute_global_address and sets a global static IP address for the load balancer
 
 ### variables.tf
-Sets the Variables of the overall project (see section marked Terraform variable setup for more details)
+- Sets the Variables of the overall project (see section marked Terraform variable setup for more details)
 
 ### Auto_scaler.tf
-Creates the autoscaler (see section marked Autoscaling for more details)
+- Creates the autoscaler (see section marked Autoscaling for more details)
 
 ### load_balancer.tf
-Creates the load balancer through using the diffrent reesources explained below
+- Creates the load balancer through using the diffrent resources explained below
 
-#### google_compute_global_forwarding_rule resource
-The Global forwarding rule provides a single global IPv4 or IPv6 address that you can use in DNS records for your site.
+google_compute_global_forwarding_rule resource
+- provides a single global IPv4 or IPv6 address that you can use in DNS records for your site.
 
 Global forwarding rules also route traffic by IP address, port, and protocol to a load balancing target proxy, which in turn forwards the traffic to an instance group containing your virtual machine instances.
 
