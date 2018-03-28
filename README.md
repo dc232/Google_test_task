@@ -11,12 +11,12 @@ The runme and Ansible scripts included in this project have been designed with U
  - [x] HTTP accepts a GET request to https://Loadbalancer-IP-address and return {foo:bar}
  - [x] Create a new Google Platform Project 
  - [x] Use f1-micro instances
- - [ ] Ensure the enviroment is completely secure
+ - [ ] Ensure the environment is completely secure
  - [x] Use Nginx/Apache or SimpleHTTPServer
  - [x] Return the correct headers
  - [x] If a server dies rebuild and re-add to the LB
  - [x] Minimum size of server auto-scaling group 1 and max 2
- - [x] IAM Acess
+ - [x] IAM Access
 
 ## Getting started 
 ### Prerequisites
@@ -27,15 +27,15 @@ The runme and Ansible scripts included in this project have been designed with U
      1. Go to the API Dashboard by typing API into the search bar 
          - Then select Credentials APIs & Services
          - Click on Create credentials --> Service account key --> Create Service account 
-         - Select Compute Engine default service account if avalible 
-         - If Compute Engine default service account is not avalible then 
+         - Select Compute Engine default service account if available 
+         - If Compute Engine default service account is not available then 
          - Click on New service account
          - Enter a name for the Service account and then click on next, 
          - Select the role as Compute Engine --> Compute Admin and then click on create
          - This will then create a .json file save this file as account.json
       
-      1. For more information about service account click ont the link https://cloud.google.com/compute/docs/access/service-accounts
-         1. The Link explains that a service account is a special account used by GCE instances to interact with other google Plaform API's. Service credentials can be used to allow applications to authorize themselves to a set of APIs and perform actions within the permissions granted to the service account and virtual machine instance.
+      1. For more information about service account click on the link https://cloud.google.com/compute/docs/access/service-accounts
+         1. The Link explains that a service account is a special account used by GCE instances to interact with other Google Platform API's. Service credentials can be used to allow applications to authorize themselves to a set of APIs and perform actions within the permissions granted to the service account and virtual machine instance.
          
      1. For more information about API Credentials, access, security, and identity click on this link ttps://support.google.com/cloud/answer/6158857?hl=en
 
@@ -44,8 +44,8 @@ The runme and Ansible scripts included in this project have been designed with U
 2. The project comes with 2 executable files, one called runme and the other Ansible
      1.  The runme file
           - Checks that Teraform is installed
-          - Provisions the SSH Keys needed to acess the instances over the exsternal IP address
-          - Creates a self signed certifcate for use with the load balancer
+          - Provisions the SSH Keys needed to access the instances over the external IP address
+          - Creates a self-signed certificate for use with the load balancer
           - Uses the Variable ```COMPUTED_IP_ADDRESS_FROM_TERRAFORM_TFSTATE``` to grab the IP address of the Global load balancer so that it can be used in the forwarding rules
      
      1. The runme file also executes the Ansible file to install 
@@ -93,17 +93,17 @@ ssh_key_creation_for_instances () {
 
 ## Ansible script important variables
 To setup variables in the Ansible script ```vi Ansible```
-Then change ```GCEZONE``` varaible variable to reflect where you are erecting the infrastructure
+Then change ```GCEZONE``` variable, variable  to reflect where you are erecting the infrastructure
 
 ## Ansible script important message 
-1. Please ensure that you set the export path to the gce.ini file i.e set the location of where the file is before running the script or it will fail to initalise with gce.py
+1. Please ensure that you set the export path to the gce.ini file i.e. set the location of where the file is before running the script or it will fail to initialise with gce.py
 
    1. To do this
         - Type ```pwd``` and make a note of the current working directory path
         - ```vi Ansible```
         - Search for the function ```GCE_ini_Config```
-        - Modify sudo ```echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc``` to relfect where the file gce.ini is on the system
-        - Adjust script timmers as needed
+        - Modify sudo ```echo "export GCE_INI_PATH=~/Desktop/CICD/Ravelin_GCP_Project/gce.ini" >> ~/.bashrc``` to reflect where the file gce.ini is on the system
+        - Adjust script timers as needed
         
 2. Please ensure that you cat the public key and add this to GCE 
    1. To do this
@@ -113,13 +113,13 @@ Then change ```GCEZONE``` varaible variable to reflect where you are erecting th
          - click on Metadata
          - Click on SSH Keys
          - Paste the key information 
-         - Verify the puplic entered into GCE is the same as that presented in the console
+         - Verify the public key entered into GCE is the same as that presented in the console
          
-Please Note: In the futre I plan to use a terraform template to add the public key to GCE automatically. This is still being reaserched to find out how to do this
+Please Note: In the future I plan to use a terraform template to add the public key to GCE automatically. This is still being researched to find out how to do this
 
 ## Terraform variable setup
-Variables to setup terraform can found in the file variables.tf and are set with the following paramters
-Please ```vi variables.tf``` as needed to update the variables to reflect the enviroment
+Variables to setup terraform can found in the file variables.tf and are set with the following parameters
+Please ```vi variables.tf``` as needed to update the variables to reflect the environment
 
 ```
 variable "region" {
@@ -140,9 +140,9 @@ variable "public_key_path" {
   default = "vm_instance_keypair/gcloud_instance_key.pub"
 }
 ```
-Please note that in the futre I will incoperate the deafult arguments such as ```"smart-radio-198517"``` into the runme script via variables so that the infrastructure can be provisioned via 2 script
+Please note that in the future I will incorporate the default arguments such as ```"smart-radio-198517"``` into the runme script via variables so that the infrastructure can be provisioned via 2 script
 
-## Overall Load balancer archetechture 
+## Overall Load balancer architecture
 The overall HTTP(S) load balancer is described to be
 
 ![basic-http-load-balancer](https://user-images.githubusercontent.com/11795947/37981742-6a77da3c-31e6-11e8-9e25-0521f332ddfa.jpg)
@@ -159,7 +159,7 @@ via the runme the following terraform files are run
 - Instance_template.tf
 - Instance_group_manager.tf
 
-Inorder to create the Load balancer through the following commands 
+In order to create the Load balancer through the following commands  
 - terraform validate (to validate the files for any errors)
 - terraform apply -auto-approve (To apply the changes to the infrastructure)
 
@@ -174,10 +174,10 @@ Inorder to create the Load balancer through the following commands
 - Sets the Variables of the overall project (see section marked Terraform variable setup for more details)
 
 ### Auto_scaler.tf
-- Creates the autoscaler (see section marked Autoscaling for more details)
+ - Creates the auto scaler (see section marked Auto scaling for more details)
 
 ### load_balancer.tf
-- Creates the load balancer through using the diffrent resources explained below
+- Creates the load balancer through using the different resources explained below
 
 ### google_compute_global_forwarding_rule resource
 - provides a single global IPv4 or IPv6 address that you can use in DNS records for your site.
@@ -186,7 +186,7 @@ Inorder to create the Load balancer through the following commands
 
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/global-forwarding-rules
 
-The reason why the static IP address is created 1st is becuase if a ephemeral IP is used i.e an Ip address that is created by Google Network Services. It would be difficult to incoperate this information in the certifactes created by the runme file as a common name needs to be defined when the self sighned certifcates are created and uploaded via the resource google_compute_ssl_certificate (more on this resource in the following sections).
+The reason why the static IP address is created 1st is because if an ephemeral IP is used i.e. an IP address that is created by Google Network Services. It would be difficult to incorporate this information in the certificates created by the runme file as a common name needs to be defined when the self-signed certificates are created and uploaded via the resource google_compute_ssl_certificate (more on this resource in the following sections).
 
 As 1 IP address is being used Google also say that
 
@@ -208,26 +208,26 @@ For more information see source: https://cloud.google.com/compute/docs/load-bala
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/target-proxies
 
 ### google_compute_ssl_certificate
-- Uploads the created self sighned from the runme script which creates an unencrypted private key and a certificate generated using that key so that it can be used by the load balancer via the target proxy
+- Uploads the created self-signed script which creates an unencrypted private key and a certificate generated using that key so that it can be used by the load balancer via the target proxy
 
 As mentioned in the documentation
 - To use HTTPS or SSL load balancing, you must create at least one SSL certificate that can be used by the target proxy for the load balancer. You can configure the target proxy with up to ten SSL certificates. For each SSL certificate, you first create an SSL certificate resource. The SSL certificate resource contains the certificate information.
 
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/ssl-certificates
 
-- In the case of the script the compute ssl certificate deals with
+- In the case of the script the compute SSl certificate deals with
 A local certificate file in PEM format. The chain may be at most 5 certs long, and must include at least one intermediate cert. Changing this forces a new resource to be created. Through the ```certificate``` argument
-Write only private key in PEM format. Changing this forces a new resource to be created. through the ```private_key``` argument
+Write only private key in PEM format. Changing this forces a new resource to be created. Through the ```private_key``` argument
 
 ### google_compute_url_map
 - The URL map allows for the direction of traffic based on the incoming URL
-- As there is no host rule (i.e domain to be redirected) then all then this means that all hosts will use the same path matcher, 
+- As there is no host rule (i.e. domain to be redirected) then all then this means that all hosts will use the same path matcher, 
 (the path matcher is essentially a folder on the backend server so if you had a domain such as www.vinsonjewellers.com/videos the patch matcher if set to /video would direct traffic to the /video folder in the instance defined by the backend service)
 - As we do not have any path matchers set as it is not needed for this task the default path matcher is used which is /*.
 
 This means that every match is sent to the default service which is defined as the backend
 
-- Grater granularity can be achived through using path rule, theese are rules with route the traffic to a particular destination of the backend such as /video/hd/* this would be a reference to match any content witin the directory /video/hd/ as stated via the GET request to the URL should be redirected to the backend insatnce hosting that content
+- Grater granularity can be achieved through using path rule, these are rules with route the traffic to a particular destination of the backend such as /video/hd/* this would be a reference to match any content within the directory /video/hd/ as stated via the GET request to the URL should be redirected to the backend instance hosting that content
 
 - An example from the source
 
@@ -249,7 +249,7 @@ This means that every match is sent to the default service which is defined as t
 ### google_compute_http_health_check
 - Manages an HTTP health check within GCE. This is used to monitor instances behind load balancers. Timeouts or HTTP errors cause the instance to be removed from the pool
 - Google Cloud Platform (GCP) health checks determine whether instances are "healthy" and available to do work. This document describes using health checks with load balancing.
-- In the case of the script there is   ```request_path       = "/"```  in other words this resource checks that the path / is still up for theese instances
+- In the case of the script there is   ```request_path       = "/"```  in other words this resource checks that the path / is still up for these instances
 
  - For more information see source: https://cloud.google.com/compute/docs/load-balancing/health-checks#legacy_health_checks
 
@@ -260,7 +260,7 @@ This means that every match is sent to the default service which is defined as t
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/network/target-pools
 
 - In the case of the script
-- Only a ```name``` is set so that the target pool can be assioated with the instace group
+- Only a ```name``` is set so that the target pool can be associated with the instance group
 
 ### google_compute_instance_group_manager
 - The Google Compute Engine Instance Group Manager API creates and manages pools of homogeneous Compute Engine virtual machine instances from a common instance template
@@ -286,10 +286,10 @@ The Line of code above allows the instance template to create an f1-micro instan
 On top of this if the server machines hit 40% then the instance template will then be run so that a second f1-micro instance can be added to the instance group which utilises the url-map which is part of the load balancer (more on this in the coming sections).
 
 This therefore means that the objectives
-Use f1-micro instances has been achived
+Use f1-micro instances has been achieved
 
 
-On top of this there is a startup script witin the instance template as outlined below
+On top of this there is a start-up script within the instance template as outlined below
 
 ```
     startup-script = <<SCRIPT
@@ -303,7 +303,7 @@ SCRIPT
 
 The excerpt above essentially allows for the creation of an nginx server in which the lines foo and bar are added to the index.nginx-debian.html page the reason for this is so that when a GET request is sent to the page 
 
-## Checking to see if the HTTP will acept a GET request to https://Loadbalancer-IP-address and return {foo:bar}
+## Checking to see if the HTTP will accept a GET request to https://Loadbalancer-IP-address and return {foo:bar}
 curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://Loadbalancer-IP-address
 
 # Checking for the correct headers
@@ -311,21 +311,23 @@ curl --insecure -i -H "Accept: application/json" -H "Content-Type: application/j
 curl -I --insecure https://Loadbalancer-IP-address
 ```
 
-The above command Above is an example of how we can check all the header for a given ip address
+The above command above is an example of how we can check all the header for a given IP address
 where curl is a tool to transfer data from or to a server and the I argument Fetches the headers only!
-as exaplined by this source: https://curl.haxx.se/docs/manpage.html
+as explained by this source: https://curl.haxx.se/docs/manpage.html
 
-The reason that we use --insecure is becuase in the runme file a self signed ssl certificate is created.
-The problem with this is that no CA will sign this particular type of certifcate and this is why we need the --insecure
+The reason that we use --insecure is because in the runme file a self-signed SSL certificate is created.
+The problem with this is that no CA will sign this particular type of certificate and this is why we need the --insecure
 
 ![header_test_output_and_correction](https://user-images.githubusercontent.com/11795947/37993397-78de3cd6-3206-11e8-93ef-f24bb0b4dfcd.png)
 
-The above picture shows what happens when we do not add the --insecure arguement to the command curl. As can be seen the certifcate verfication check fails as the certifcate is seen to be untrusted.
+The above picture shows what happens when we do not add the --insecure argument to the command curl. As can be seen the certificate verification check fails as the certificate is seen to be untrusted.
 
-A posible soultion locally for this can be found from this source: https://stackoverflow.com/questions/21181231/server-certificate-verification-failed-cafile-etc-ssl-certs-ca-certificates-c 
-I am still reaserching this part via the link, however it is more practical to associate a hostname with the load balancer and then get the the certifcate signed by a CA such as lets encrypt.
+A possible solution locally for this can be found from this source: https://stackoverflow.com/questions/21181231/server-certificate-verification-failed-cafile-etc-ssl-certs-ca-certificates-c
 
-The self signed certifcate code can be seen via the function ```certifcate_creation``` an excert of which can be seen below
+I am still researching this part via the link, however it is more practical to associate a hostname with the load balancer and then get the certificate signed by a CA such as lets encrypt.
+
+
+The self-signed certificate code can be seen via the function ```certifcate_creation``` an excerpt of which can be seen below
 
 ```
 certifcate_creation () {
@@ -357,13 +359,13 @@ mkdir ssl_cert
 }
 ```
 
-From the screen shot above once we add the --insecure argument we see that we get the reponse 200 OK which means that the nginx page is reachable and viewable
+From the screen shot above once we add the --insecure argument we see that we get the response 200 OK which means that the nginx page is reachable and viewable
 
 It is therefore possible to suggest that the correct headers are being returned
 
-## Autoscaling
-Autoscaling is handled by the Auto_scaler.tf file
-in which the following code is run
+## Auto scaling
+Auto scaling is handled by the Auto_scaler.tf file
+In which the following code is run
 
 ```
 resource "google_compute_autoscaler" "foobar" {
@@ -383,29 +385,30 @@ resource "google_compute_autoscaler" "foobar" {
 }
 ```
 
-The code above executes an autoscaling policy in which the minimum number of servers in the autoscaling group in this case in the instance group "foobar" is 1 and when the cpu on the instance hits 40% another f1-micro instance is created via the instance template.
-The cooldown_period period option is the wait between a change in the cpu utilization. This is double the time the instances take to start up which is usually 30 seconds.
+The code above executes an auto scaling policy in which the minimum number of servers in the auto scaling group in this case in the instance group "foobar" is 1 and when the CPU on the instance hits 40% another f1-micro instance is created via the instance template.
+
+The cooldown_period period option is the wait between a change in the CPU utilization. This is double the time the instances take to start up which is usually 30 seconds.
 
 From the code above we can therefore say that the following objectives have been completed
-- Server machines scale at 40% cpu has been completed
+- Server machines scale at 40% CPU has been completed
 - Minimum size of server auto-scaling group = 1 and max = 2
 
-## IAM Acess
+## IAM Access
 - Google Cloud Identity & Access Management (IAM) lets administrators authorize who can take action on specific resources
-- There are 2 bits if acess for this 1 is via the IAM in google cloud
+- There are 2 bits if access for this 1 is via the IAM in google cloud
 - The other is IAM for the service account
-- Setting IAM in the service account for the email address which needs acess appears to overide the IAM generic acess
-- Upon further reaserch and investigation I have concluded that IAM acess should be provisioned via the service account and permissions given accordingly in this case as the terraform files are in the compute domian I have given the relevant people access to that resource which is  compute admin for the reasons stated below
+- Setting IAM in the service account for the email address which needs access appears to override the IAM generic access
+- Upon further research and investigation I have concluded that IAM access should be provisioned via the service account and permissions given accordingly in this case as the terraform files are in the compute domain I have given the relevant people access to that resource which is compute admin for the reasons stated below
 
 - I have tried to create a custom role however the problem with this is that 
-- The permissions ```compute.httpstargetproxies*``` and ```compute.backendservice*``` are not supported in custom roles whhich is needed to make the terraform files work
-- I also tried to modify existing roles to see weather or not I could gain these permissions back but GCP does not support this and does not allow editing of existing roles
+- The permissions ```compute.httpstargetproxies*``` and ```compute.backendservice*``` are not supported in custom roles which is needed to make the terraform files work
+- I also tried to modify existing roles to see whether or not I could gain these permissions back but GCP does not support this and does not allow editing of existing roles
 
-### screenshots of IAM process
+### Screenshots  of IAM process
 ![setting_iam](https://user-images.githubusercontent.com/11795947/38022745-3e11addc-3278-11e8-9b8d-b89ba7848e9b.jpg)
 The picture above shows the overall screen of permissions in IAM, I have had to blur out the email address as they some of them have PII
 
-- For more infromation on IAM access refer the sources listed below:
+- For more information on IAM access refer the sources listed below:
 - https://cloud.google.com/iam/docs/overview#roles
 - https://cloud.google.com/terms/launch-stages
 - https://cloud.google.com/iam/
@@ -413,14 +416,14 @@ The picture above shows the overall screen of permissions in IAM, I have had to 
 - https://cloud.google.com/iam/reference/rest/v1/Policy
 
 This as a result means that the following objective has been met
-- IAM acess
+- IAM access
 
 ## Security
-The current desighn of the project as it stands is insecure. The reason being becuase the project use of exsteral IP addresses for management via ansible.
+The current design of the project as it stands is insecure. The reason being because the project use of external IP addresses for management via ansible.
 
-The problem with this approach is that all hosts in the instance group have exsternal IPS in which the nginx server can be reached on port 80 meaning that they can be suspect to denail of service attacks.
+The problem with this approach is that all hosts in the instance group have external IPS in which the nginx server can be reached on port 80 meaning that they can be suspect to denial of service attacks.
 
-This particular area of application security is new to me and I am still at the present moment reaserching this part of the project so that I can make the application more secure I did find out about GCP best practices in regards to security but becuase of time contriants I have not been able to implement them.
+This particular area of application security is new to me and I am still at the present moment researching this part of the project so that I can make the application more secure I did find out about GCP best practices in regards to security but because of time constraints I have not been able to implement them.
 
 However this did deter me from trying to implement some sort of security
 For example if we look at the firewall rules via gcloud implemented by default we can see that they are reasonably secure
@@ -435,43 +438,42 @@ default-allow-rdp       default  INGRESS    65534     tcp:3389
 default-allow-ssh       default  INGRESS    65534     tcp:22
 ```
 
-so the rules
+So the rules
 - default-allow-http
 - default-allow-https 
 - default-allow-internal
 - default-allow-ssh 
 
 Make sense to have and these ports are in use
-so 443 from the loadbalancer to port 80 on the backend
-and then port 22 via ansible to manage the insatnces
-The internal rules are ok as well becuase they are not public facing
+So 443 from the load balancer to port 80 on the backend
+and then port 22 via ansible to manage the instances
+The internal rules are ok as well because they are not public facing
 
-The only rule that is uncessary is 
+The only rule that is unnecessary is
 - default-allow-rdp
 
-Which is for Remote desktop acess if using windows clients
+Which is for Remote desktop access if using windows clients
 However even though the port is exposed in the network the port itself is not being used by any service
 
-The ICMP rule is debateable on the one hand it allows hackers to map out the network or expose the infrasture to the ping of death if enough traffic is sent but may be usefull in the event that something goes wrong.
-However there is partial migitation becuase of the autoscaling if exposed to the ping of death
-
+The ICMP rule is debateable on the one hand it allows hackers to map out the network or expose the infrastructure to the ping of death if enough traffic is sent but may be useful in the event that something goes wrong.
+However there is partial mitigation because of the auto scaling if exposed to the ping of death
 
 ## SSL cert security attempts
 ![invalid ssl certificate due to invalid certificate authority](https://user-images.githubusercontent.com/11795947/38024864-30d6d61e-327e-11e8-9980-cd2b2fb933bb.png)
-From the image above I attempted to sighn a CSR to a CA to see weather or not the IP address would be seen as trusted on the clients machines. Unfortunatley this did not work and the CA was untrusted
+From the image above I attempted to sign a CSR to a CA to see whether or not the IP address would be seen as trusted on the client’s machines. Unfortunately this did not work and the CA was untrusted
 
 ![lets encrypt no cert as bare ip address](https://user-images.githubusercontent.com/11795947/38025000-b8d32d38-327e-11e8-9dfa-e13594bc1346.png)
-This was my second attempt at getting the SSL certifcate signed. However as the load balancer IP is bare then lets encrpt did not sighn it meaning it is untrusted
+This was my second attempt at getting the SSL certificate signed. However as the load balancer IP is bare then lets encrypt did not sign it meaning it is untrusted
 
 ![self-sighned-error-https-load-balancer](https://user-images.githubusercontent.com/11795947/38025095-08b96ac4-327f-11e8-8fa6-3b206a06ed23.png)
-Shows my attempt at trying understand how the load balancer see the certifcate. Again comes back as untrusted
+Shows my attempt at trying understand how the load balancer see the certificate. Again comes back as untrusted
 
 ![sighned-certificate](https://user-images.githubusercontent.com/11795947/38025333-e47a93bc-327f-11e8-9d75-a95b8a2815da.png)
 3rd attempt at trying to get the certificate signed but fails on error, this method is the same as the lets encrypt method
 
-The reason why I tried all theese attempts was because I wanted to try get a trusted certificate that I could present to the user to say that the site presented form thr load balancer is trusted
+The reason why I tried all these attempts was because I wanted to try get a trusted certificate that I could present to the user to say that the site presented form the load balancer is trusted
 
-## Attempt at securing the instances through interal IP addressing 
+## Attempt at securing the instances through internal IP addressing  
 
 ![attempt_to_get_internal_ip_address_to_talk_to_the_load_balancer](https://user-images.githubusercontent.com/11795947/38027856-fec32b7c-3288-11e8-9bed-5628bf3ea906.png)
 
@@ -483,21 +485,21 @@ In this attempt I removed the
     }
 ```
 
-component from the instance template the thinking here was that as its all Google infrastructure there is a possibility that by enabling the private google access component within the VPC subnet that the internal IP address of the VM instances would be able to communicate with the load balancer with the internal IP Address and thus allow for higher levels of security becuase the exasternal IP addresses would not be exposed.
+component from the instance template the thinking here was that as its all Google infrastructure there is a possibility that by enabling the private google access component within the VPC subnet that the internal IP address of the VM instances would be able to communicate with the load balancer with the internal IP Address and thus allow for higher levels of security because the external IP addresses would not be exposed.
 
 However 
 ![internal_server_trail_to_make_the_site_more_secure](https://user-images.githubusercontent.com/11795947/38028216-256bc06c-328a-11e8-8c8b-7ab543ebce3c.png)
 
 The following message was observed as seen in the picture above even after 30 seconds had elapsed.
 
-Upon further investigation and exsperimentation the message seen in the picture below was observed
+Upon further investigation and experimentation the message seen in the picture below was observed
 ![error_explanation](https://user-images.githubusercontent.com/11795947/38028367-9f523bc2-328a-11e8-985a-66f7539fb957.jpg)
 
-So I tried to adjust the port so that it was port 80 in which the load balancer listens on to acept the request as i was unsure which port this should be. Looking back I think that maybe if port 443 was in use this could have worked but more reaserch and exsperimentation would be needed.
+So I tried to adjust the port so that it was port 80 in which the load balancer listens on to accept the request as I was unsure which port this should be. Looking back I think that maybe if port 443 was in use this could have worked but more research and experimentation would be needed.
 
-The reason why I have not been able to incoperate a bastion host is becuase I am trying to understand/reaserch the archtecture of how it would interact with the loadbalancer becuase I belive that it would need to find a way to proxy the requests to the backend.
+The reason why I have not been able to incorporate a bastion host is because I am trying to understand/research the architecture of how it would interact with the load balancer because I believe that it would need to find a way to proxy the requests to the backend.
 
-According to google a possible archetechture is 
+According to google a possible architecture is
 ![bastion 1](https://user-images.githubusercontent.com/11795947/38029024-9dbff400-328c-11e8-8d6d-8807d0635002.png)
 But the picture makes no reference as to how to integrate a load balancer
 
@@ -522,10 +524,10 @@ https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/blob/master/
 
 
 ## What has been learnt from not currently achieving this objective?
-From trying to achieve this point what I have learned is that by desighn this project would require the following to be more secure
-- NAT Gateway between for bastion host with the internal ip addresses of the GCE VM's written within the routing table
+From trying to achieve this point what I have learned is that by design this project would require the following to be more secure
+- NAT Gateway between for bastion host with the internal IP addresses of the GCE VM's written within the routing table
 - Where the bastion jump host to manage the back end VM's connected the NAT gateway, with either ansible or gcloud installed for configuration management
-- Install Fail2ban on the bastion which according to https://www.exoscale.com/syslog/secure-your-cloud-computing-architecture-with-a-bastion/ automatically blacklists IP addresses from which any tentative brute force attack on your sshd process is detected which can be achived from the following command 
+- Install Fail2ban on the bastion which according to https://www.exoscale.com/syslog/secure-your-cloud-computing-architecture-with-a-bastion/ automatically blacklists IP addresses from which any tentative brute force attack on your sshd process is detected which can be achieved from the following command 
 
 ```
 apt-get update && apt-get -y install fail2ban
@@ -533,7 +535,7 @@ apt-get update && apt-get -y install fail2ban
 - Limit the CIDR range of source IPs that can communicate with the bastion (I assume this is within the VPC)
 - Configure firewall rules to allow SSH traffic to private instances from only the bastion host
 - use ssh-agent forwarding instead of storing the target machine's private key on the bastion host as a way of reaching the target machine
-- Attach NAT Gateway to load balancer? (still reaserching this)
+- Attach NAT Gateway to load balancer? (still researching this)
 
 For more information about security in GCP refer to sources below:
 - https://cloud.google.com/docs/enterprise/best-practices-for-enterprise-organizations#networking-and-security
@@ -556,7 +558,7 @@ echo $terraform_static_global_IP_init
 ```
 
 ## How can I see/know the infrastructure that I have created without the GCP user interface?
-You can view the infrastruce created through the 
+You can view the infrastructure created through the 
 ```
 terraform show 
 ```
@@ -564,10 +566,9 @@ Command in the ```static_IP/``` directory and the main project file directory ma
 
 ## I have a permission denied public key error when using ansible
 In order for this to work see section marked (Ansible script important message)
-However when using a service account key you may not be able to acess the metdata page to add the key.
+However when using a service account key you may not be able to access the metdata page to add the key.
 In this instance you could install gcloud sdk to manage the infrastructure
 
-I am still in the process of figuring this part out programatically
-
+I am still in the process of figuring this part out programmatically
 
 
