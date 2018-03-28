@@ -192,10 +192,18 @@ As 1 IP address is being used Google also say that
 
 Note: SSL certificate resources are not used on individual VM instances. On an instance, install the normal SSL certificate as described in your application documentation. SSL certificate resources are used only with load balancing proxies such as a target HTTPS proxy or target SSL proxy. See that documentation for when and how to use SSL certificate resources.
 
+In the case of the script the Global forwarding rule deals with
+- URL of target HTTP or HTTPS proxy via the ```target``` argument
+-```port_range``` argument which is the port of the target HTTP proxy server/system
+
 For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/ssl-certificates
 
 ### google_compute_target_https_proxy
 - Target proxies are referenced by one or more global forwarding rules. In the case of HTTP(S) load balancing, proxies route incoming requests to a URL map.
+
+- In the case of the script the Target Proxy deals with
+- The URLs or names of the SSL Certificate resources that authenticate connections between users and load balancing through the  argument ```ssl_certificates```
+- The URL of a URL Map resource that defines the mapping from the URL to the BackendService. through the ```url_map``` arugment
 
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/target-proxies
 
@@ -207,11 +215,15 @@ As mentioned in the documentation
 
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/ssl-certificates
 
+- In the case of the script the compute ssl certificate deals with
+A local certificate file in PEM format. The chain may be at most 5 certs long, and must include at least one intermediate cert. Changing this forces a new resource to be created. Through the ```certificate``` argument
+Write only private key in PEM format. Changing this forces a new resource to be created. through the ```private_key``` argument
+
 ### google_compute_url_map
 - The URL map allows for the direction of traffic based on the incoming URL
 - As there is no host rule (i.e domain to be redirected) then all then this means that all hosts will use the same path matcher, 
 (the path matcher is essentially a folder on the backend server so if you had a domain such as www.vinsonjewellers.com/videos the patch matcher if set to /video would direct traffic to the /video folder in the instance defined by the backend service)
-- As we do not have any path matchers set as it is not needed for this task the default path matcher is used which is /*. 
+- As we do not have any path matchers set as it is not needed for this task the default path matcher is used which is /*.
 
 This means that every match is sent to the default service which is defined as the backend
 
@@ -221,21 +233,28 @@ This means that every match is sent to the default service which is defined as t
 
 ![url-map-detail-1 1](https://user-images.githubusercontent.com/11795947/38011516-9c34d1f0-3255-11e8-99d6-6136d944d0ec.png)
 
+- In the case of the script the compute url map deals with
+- The backend service or backend bucket to use when none of the given rules match through the ```default_service``` argument
+
 - For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/url-map
 
 ### google_compute_backend_service
 - A Backend Service defines a group of virtual machines that will serve traffic for load balancing
 - An HTTP(S) load balancing backend service is a centralized service for managing backends, which in turn manage instances that handle user requests. You configure your load balancing service to route requests to your backend service. The backend service in turn knows which instances it can use, how much traffic they can handle, and how much traffic they are currently handling. In addition, the backend service monitors health checking and does not send traffic to unhealthy instances.
+-In the case of the script A ```protocol``` is defined for incoming requests to the instances by default to HTTP. As the traffic going into the instances are set via port 80 it makes sense that this is the protocol. the requests are then sent to the backend described as the instance group in the script for backend processing
+
 
 - For more information see source https://cloud.google.com/compute/docs/load-balancing/http/backend-service
 
 ### google_compute_http_health_check
 - Manages an HTTP health check within GCE. This is used to monitor instances behind load balancers. Timeouts or HTTP errors cause the instance to be removed from the pool
 - Google Cloud Platform (GCP) health checks determine whether instances are "healthy" and available to do work. This document describes using health checks with load balancing.
-- in the case of the script there is   ```request_path       = "/"```  in other words this resource checks that the path / is still up for theese instances
+- In the case of the script there is   ```request_path       = "/"```  in other words this resource checks that the path / is still up for theese instances
+
  - For more information see source: https://cloud.google.com/compute/docs/load-balancing/health-checks#legacy_health_checks
 
 ### google_compute_target_pool
+
 
 ### google_compute_instance_group_manager
 
