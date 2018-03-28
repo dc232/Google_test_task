@@ -497,6 +497,8 @@ Upon further investigation and experimentation the message seen in the picture b
 
 So I tried to adjust the port so that it was port 80 in which the load balancer listens on to accept the request as I was unsure which port this should be. Looking back I think that maybe if port 443 was in use this could have worked but more research and experimentation would be needed.
 
+# Possible solution to how to make the environment more secure
+
 The reason why I have not been able to incorporate a bastion host is because I am trying to understand/research the architecture of how it would interact with the load balancer because I believe that it would need to find a way to proxy the requests to the backend.
 
 According to google a possible architecture is
@@ -522,6 +524,7 @@ https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/blob/master/
 - There is also reference to https://github.com/GoogleCloudPlatform/terraform-google-managed-instance-group
 - Which appears to be attached to a managed instance group
 
+With the information above with more time it would be possible reengineer the environment to make it more secure
 
 ## What has been learnt from not currently achieving this objective?
 From trying to achieve this point what I have learned is that by design this project would require the following to be more secure
