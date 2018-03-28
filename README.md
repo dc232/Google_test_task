@@ -416,7 +416,108 @@ This as a result means that the following objective has been met
 - IAM acess
 
 ## Security
+The current desighn of the project as it stands is insecure. The reason being becuase the project use of exsteral IP addresses for management via ansible.
 
-a series of actions or steps taken in order to achieve a particular end.
+The problem with this approach is that all hosts in the instance group have exsternal IPS in which the nginx server can be reached on port 80 meaning that they can be suspect to denail of service attacks.
+
+This particular area of application security is new to me and I am still at the present moment reaserching this part of the project so that I can make the application more secure I did find out about GCP best practices in regards to security but becuase of time contriants I have not been able to implement them.
+
+However this did deter me from trying to implement some sort of security
+For example if we look at the firewall rules via gcloud implemented by default we can see that they are reasonably secure
+```
+dc@dc-HP-Pavilion-dv7-Notebook-PC:~/Desktop/CICD/GCLOUD$ gcloud compute firewall-rules list
+NAME                    NETWORK  DIRECTION  PRIORITY  ALLOW                         DENY
+default-allow-http      default  INGRESS    1000      tcp:80
+default-allow-https     default  INGRESS    1000      tcp:443
+default-allow-icmp      default  INGRESS    65534     icmp
+default-allow-internal  default  INGRESS    65534     tcp:0-65535,udp:0-65535,icmp
+default-allow-rdp       default  INGRESS    65534     tcp:3389
+default-allow-ssh       default  INGRESS    65534     tcp:22
+```
+
+so the rules
+- default-allow-http
+- default-allow-https 
+- default-allow-internal
+- default-allow-ssh 
+
+Make sense to have and these ports are in use
+so 443 from the loadbalancer to port 80 on the backend
+and then port 22 via ansible to manage the insatnces
+The internal rules are ok as well becuase they are not public facing
+
+The only rule that is uncessary is 
+- default-allow-rdp
+
+Which is for Remote desktop acess if using windows clients
+However even though the port is exposed in the network the port itself is not being used by any service
+
+The ICMP rule is debateable on the one hand it allows hackers to map out the network or expose the infrasture to the ping of death if enough traffic is sent but may be usefull in the event that something goes wrong.
+However there is partial migitation becuase of the autoscaling if exposed to the ping of death
+
+
+## SSL cert security attempts
+![invalid ssl certificate due to invalid certificate authority](https://user-images.githubusercontent.com/11795947/38024864-30d6d61e-327e-11e8-9980-cd2b2fb933bb.png)
+From the image above I attempted to sighn a CSR to a CA to see weather or not the IP address would be seen as trusted on the clients machines. Unfortunatley this did not work and the CA was untrusted
+
+![lets encrypt no cert as bare ip address](https://user-images.githubusercontent.com/11795947/38025000-b8d32d38-327e-11e8-9dfa-e13594bc1346.png)
+This was my second attempt at getting the SSL certifcate signed. However as the load balancer IP is bare then lets encrpt did not sighn it meaning it is untrusted
+
+![self-sighned-error-https-load-balancer](https://user-images.githubusercontent.com/11795947/38025095-08b96ac4-327f-11e8-8fa6-3b206a06ed23.png)
+Shows my attempt at trying understand how the load balancer see the certifcate. Again comes back as untrusted
+
+![sighned-certificate](https://user-images.githubusercontent.com/11795947/38025333-e47a93bc-327f-11e8-9d75-a95b8a2815da.png)
+3rd attempt at trying to get the certificate signed but fails on error, this method is the same as the lets encrypt method
+
+The reason why I tried all theese attempts was because I wanted to try get a trusted certificate that I could present to the user to say that the site presented form thr load balancer is trusted
+
+## Attempt at securing the instances through interal IP addressing 
+
+![attempt_to_get_internal_ip_address_to_talk_to_the_load_balancer](https://user-images.githubusercontent.com/11795947/38027856-fec32b7c-3288-11e8-9bed-5628bf3ea906.png)
+
+In this attempt I removed the 
+
+```
+    access_config {
+      // Ephemeral IP
+    }
+```
+
+component from the instance template the thinking here was that as its all Google infrastructure there is a possibility that by enabling the 
+
+For more information about security in GCP refer to sources below:
+- https://cloud.google.com/docs/enterprise/best-practices-for-enterprise-organizations#networking-and-security
+- https://cloud.google.com/security/infrastructure/design/
+- https://cloud.google.com/solutions/connecting-securely
+
+
+## How do I find the address of the HTTPS load balancer?
+Very simple 
+in the project folder directory (i.e where you downloaded the project)
+```
+cd static_IP/
+terraform show | grep address | sed '2d' tr -d ip_address | tr -d = | tr -d ' '
+then enter https://found-ip-of-load-balancer into your browser
+```
+
+Alternatively you can put inside the readme script you make use of the variable called COMPUTED_IP_ADDRESS_FROM_TERRAFORM_TFSTATE within the function terraform_static_global_IP_init by adding the following line of code into the function
+```
+echo $terraform_static_global_IP_init
+```
+
+## How can I see/know the infrastructure that I have created without the GCP user interface?
+You can view the infrastruce created through the 
+```
+terraform show 
+```
+Command in the ```static_IP/``` directory and the main project file directory marked ```Google_test_task```
+
+## I have a permission denied public key error when using ansible
+In order for this to work see section marked (Ansible script important message)
+However when using a service account key you may not be able to acess the metdata page to add the key.
+In this instance you could install gcloud sdk to manage the infrastructure
+
+I am still in the process of figuring this part out programatically
+
 
 
