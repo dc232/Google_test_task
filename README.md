@@ -254,6 +254,13 @@ This means that every match is sent to the default service which is defined as t
  - For more information see source: https://cloud.google.com/compute/docs/load-balancing/health-checks#legacy_health_checks
 
 ### google_compute_target_pool
+- Manages a Target Pool within GCE. This is a collection of instances used as target of a network load balancer (Forwarding Rule)
+- A Target Pool resource defines a group of instances that should receive incoming traffic from forwarding rules. When a forwarding rule directs traffic to a target pool, Google Compute Engine picks an instance from these target pools based on a hash of the source IP and port and the destination IP and port
+
+- For more information see source: https://cloud.google.com/compute/docs/load-balancing/network/target-pools
+
+- In the case of the script
+- Only a ```name``` is set so that the target pool can be assioated with the instace group
 
 
 ### google_compute_instance_group_manager
