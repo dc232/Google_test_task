@@ -412,6 +412,8 @@ The picture above shows the overall screen of permissions in IAM, I have had to 
 - https://cloud.google.com/iam/docs/service-accounts
 - https://cloud.google.com/iam/reference/rest/v1/Policy
 
+This as a result means that the following objective has been met
+- IAM acess
 
 ## Security
 
