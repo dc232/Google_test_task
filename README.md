@@ -495,18 +495,6 @@ Upon further investigation and exsperimentation the message seen in the picture 
 
 So I tried to adjust the port so that it was port 80 in which the load balancer listens on to acept the request as i was unsure which port this should be. Looking back I think that maybe if port 443 was in use this could have worked but more reaserch and exsperimentation would be needed.
 
-From trying to achieve this point what I have learned is that by desighn this project would require the following to be more secure
-- NAT Gateway between for bastion host with the internal ip addresses of the GCE VM's written within the routing table
-- where the bastion jump host to manage the back end VM's connected the NAT gateway, with either ansible or gcloud installed for configuration management
-- install Fail2ban on the bastion which according to https://www.exoscale.com/syslog/secure-your-cloud-computing-architecture-with-a-bastion/ automatically blacklists IP addresses from which any tentative brute force attack on your sshd process is detected which can be achived from the following command 
-
-```
-apt-get update && apt-get -y install fail2ban
-```
-- Limit the CIDR range of source IPs that can communicate with the bastion (I assume this is within the VPC)
-- Configure firewall rules to allow SSH traffic to private instances from only the bastion host
-- use ssh-agent forwarding instead of storing the target machine's private key on the bastion host as a way of reaching the target machine
-
 The reason why I have not been able to incoperate a bastion host is becuase I am trying to understand/reaserch the archtecture of how it would interact with the loadbalancer becuase I belive that it would need to find a way to proxy the requests to the backend.
 
 According to google a possible archetechture is 
@@ -522,6 +510,30 @@ This theory seems to be supported by this source https://stackoverflow.com/quest
 possible architecture from https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/tree/master/examples/lb-http-nat-gateway suggests the topology seen below
 ![diagram](https://user-images.githubusercontent.com/11795947/38030763-6c8e31e4-3291-11e8-8ce3-708e0bf8fd12.png)
 
+
+https://github.com/GoogleCloudPlatform/terraform-google-nat-gateway/blob/master/main.tf
+The link above describes a possibnle way in which a NAT gateway could be set up
+in which ```google_compute_network``` is used to create a network within the VPC
+```google_compute_route``` appears to be used for internal IP address routing
+```google_compute_firewall``` manages the firewall rules to allow all protocols
+```google_compute_address``` is used to set a static ip address via reference to a name
+There is also reference to https://github.com/GoogleCloudPlatform/terraform-google-managed-instance-group
+which appears to be attached to a managed instance group
+
+
+## What has been learnt from not currently achieving this objective?
+From trying to achieve this point what I have learned is that by desighn this project would require the following to be more secure
+- NAT Gateway between for bastion host with the internal ip addresses of the GCE VM's written within the routing table
+- Where the bastion jump host to manage the back end VM's connected the NAT gateway, with either ansible or gcloud installed for configuration management
+- Install Fail2ban on the bastion which according to https://www.exoscale.com/syslog/secure-your-cloud-computing-architecture-with-a-bastion/ automatically blacklists IP addresses from which any tentative brute force attack on your sshd process is detected which can be achived from the following command 
+
+```
+apt-get update && apt-get -y install fail2ban
+```
+- Limit the CIDR range of source IPs that can communicate with the bastion (I assume this is within the VPC)
+- Configure firewall rules to allow SSH traffic to private instances from only the bastion host
+- use ssh-agent forwarding instead of storing the target machine's private key on the bastion host as a way of reaching the target machine
+- Attach NAT Gateway to load balancer? (still reaserching this)
 
 For more information about security in GCP refer to sources below:
 - https://cloud.google.com/docs/enterprise/best-practices-for-enterprise-organizations#networking-and-security
