@@ -147,7 +147,7 @@ The overall HTTP(S) load balancer is described to be
 
 ![basic-http-load-balancer](https://user-images.githubusercontent.com/11795947/37981742-6a77da3c-31e6-11e8-9e25-0521f332ddfa.jpg)
 
-more information can be found via the following link https://cloud.google.com/compute/docs/load-balancing/http/
+More information can be found via the following link https://cloud.google.com/compute/docs/load-balancing/http/
 
 via the runme the following terraform files are run
 - static_IP/Secrets.tf
@@ -155,7 +155,6 @@ via the runme the following terraform files are run
 - variables.tf
 - Secrets.tf
 - Auto_scaler.tf
-- Backend.tf
 - load_balancer.tf
 - Instance_template.tf
 - Instance_group_manager.tf
@@ -164,10 +163,41 @@ Inorder to create the Load balancer through the following commands
 terraform validate (to validate the files for any errors)
 terraform apply -auto-approve (To apply the changes to the infrastructure)
 
-Where Secrets.tf 
+### Secrets.tf 
 - Finds and uses the account.json file
-- Sets the Project name and region
+- Sets the Project name and Region
 
+### static_IP/StaticIP.tf
+Runs the resource google_compute_global_address and sets a global static IP address for the load balancer
+
+### variables.tf
+Sets the Variables of the overall project (see section marked Terraform variable setup for more details)
+
+### Auto_scaler.tf
+Creates the autoscaler (see section marked Autoscaling for more details)
+
+### load_balancer.tf
+Creates the load balancer through using the diffrent reesources explained below
+
+#### google_compute_global_forwarding_rule resource
+The Global forwarding rule provides a single global IPv4 or IPv6 address that you can use in DNS records for your site.
+
+Global forwarding rules also route traffic by IP address, port, and protocol to a load balancing target proxy, which in turn forwards the traffic to an instance group containing your virtual machine instances.
+
+for more information see source: https://cloud.google.com/compute/docs/load-balancing/http/global-forwarding-rules
+
+
+
+
+
+
+//ip_address - (Optional) The static IP. (if not set, an ephemeral IP is used
+//inother words it should make an ip address for us as its set to ephemeral but this would not work with the
+//ssl certificates reason being becuase with a static we can gthen define the common name and upload it 
+//remeber without a domain name we cannot get a green ssl as the origin server is not directly reachable, becuase
+//we are using 1 global Ip for  both instances it also mentions in the docs
+//Note: SSL certificate resources are not used on individual VM instances. On an instance, install the normal SSL certificate as described in your application documentation. SSL certificate resources are used only with load balancing proxies such as a target HTTPS proxy or target SSL proxy. See that documentation for when and how to use SSL certificate resources.
+//https://www.terraform.io/docs/providers/google/r/compute_global_forwarding_rule.html
 
 
 ## Terraform file overview
