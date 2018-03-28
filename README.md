@@ -179,25 +179,29 @@ Inorder to create the Load balancer through the following commands
 ### load_balancer.tf
 - Creates the load balancer through using the diffrent resources explained below
 
-google_compute_global_forwarding_rule resource
+### google_compute_global_forwarding_rule resource
 - provides a single global IPv4 or IPv6 address that you can use in DNS records for your site.
 
-Global forwarding rules also route traffic by IP address, port, and protocol to a load balancing target proxy, which in turn forwards the traffic to an instance group containing your virtual machine instances.
+- Global forwarding rules also route traffic by IP address, port, and protocol to a load balancing target proxy, which in turn forwards the traffic to an instance group containing your virtual machine instances.
 
-for more information see source: https://cloud.google.com/compute/docs/load-balancing/http/global-forwarding-rules
+- For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/global-forwarding-rules
+
+The reason why the static IP address is created 1st is becuase if a ephemeral IP is used i.e an Ip address that is created by Google Network Services. It would be difficult to incoperate this information in the certifactes created by the runme file as a common name needs to be defined when the self sighned certifcates are created and uploaded via the resource google_compute_ssl_certificate (more on this resource in the following sections).
+
+As 1 IP address is being used Google also say that
+
+Note: SSL certificate resources are not used on individual VM instances. On an instance, install the normal SSL certificate as described in your application documentation. SSL certificate resources are used only with load balancing proxies such as a target HTTPS proxy or target SSL proxy. See that documentation for when and how to use SSL certificate resources.
+
+For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/ssl-certificates
+
+### google_compute_target_https_proxy
+- Target proxies are referenced by one or more global forwarding rules. In the case of HTTP(S) load balancing, proxies route incoming requests to a URL map.
+
+- For more information see source: https://cloud.google.com/compute/docs/load-balancing/http/target-proxies
+
+### google_compute_ssl_certificate
 
 
-
-
-
-
-//ip_address - (Optional) The static IP. (if not set, an ephemeral IP is used
-//inother words it should make an ip address for us as its set to ephemeral but this would not work with the
-//ssl certificates reason being becuase with a static we can gthen define the common name and upload it 
-//remeber without a domain name we cannot get a green ssl as the origin server is not directly reachable, becuase
-//we are using 1 global Ip for  both instances it also mentions in the docs
-//Note: SSL certificate resources are not used on individual VM instances. On an instance, install the normal SSL certificate as described in your application documentation. SSL certificate resources are used only with load balancing proxies such as a target HTTPS proxy or target SSL proxy. See that documentation for when and how to use SSL certificate resources.
-//https://www.terraform.io/docs/providers/google/r/compute_global_forwarding_rule.html
 
 
 ## Terraform file overview
