@@ -3,7 +3,7 @@ resource "google_compute_instance" "default" {
   machine_type = "f1-micro"
   zone         = "us-central1-a"
 
-  tags = ["foo", "bar"]
+  tags = ["http-custom-rule", "ssh-custom-rule"]
 
   boot_disk {
     initialize_params {
@@ -33,3 +33,5 @@ resource "google_compute_instance" "default" {
     scopes = ["userinfo-email", "compute-ro", "storage-ro"]
   }
 }
+
+//demo https://codelabs.developers.google.com/codelabs/gcp-infra-bastion-host/index.html?index=..%2F..%2Fcloud#1
