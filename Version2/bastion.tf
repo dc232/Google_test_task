@@ -7,7 +7,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-8"
+      image = "ubuntu-os-cloud/ubuntu-1604-lts"
     }
   }
 
@@ -16,7 +16,7 @@ resource "google_compute_instance" "default" {
   }
 
   network_interface {
-    network = "default"
+    network = "custom"
 
     access_config {
       // Ephemeral IP
