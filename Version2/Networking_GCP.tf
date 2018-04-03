@@ -21,3 +21,26 @@ resource "google_compute_subnetwork" "custom-us-central1" {
 resource "google_compute_network" "default" {
   name = "custom"
 }
+
+
+
+resource "google_compute_firewall" "default" {
+  name    = "test-firewall"
+  network = "${google_compute_network.default.name}"
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "8080", "443", "22"]
+  }
+//Added firewall rules to allow both ICMP and tcp, as well as HTTP and HTTPS and SSH
+  source_tags = ["web"]
+}
+
+//creates firewall rule needed to allow traffic through to the network
+//by deafult there is an implict deny on all traffic toward the newly created network 
+//therefore we need to add rules 
+//https://cloud.google.com/compute/docs/networks-and-firewalls
