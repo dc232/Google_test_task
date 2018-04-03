@@ -24,7 +24,7 @@ resource "google_compute_network" "default" {
 
 
 
-resource "google_compute_firewall" "default" {
+resource "google_compute_firewall" "icmp" {
   name    = "ICMP_custom_rule"
   network = "${google_compute_network.default.name}"
 
@@ -36,7 +36,7 @@ resource "google_compute_firewall" "default" {
   source_tags = ["icmp-rule"]
 }
 
-resource "google_compute_firewall" "default" {
+resource "google_compute_firewall" "http" {
   name    = "HTTP_custom_rule"
   network = "${google_compute_network.default.name}"
 
@@ -55,7 +55,7 @@ resource "google_compute_firewall" "default" {
 }
 
 
-resource "google_compute_firewall" "default" {
+resource "google_compute_firewall" "https" {
   name    = "HTTP_custom_rule"
   network = "${google_compute_network.default.name}"
 
@@ -69,7 +69,7 @@ resource "google_compute_firewall" "default" {
   source_tags = ["https-rule"]
 }
 
-resource "google_compute_firewall" "default" {
+resource "google_compute_firewall" "ssh" {
   name    = "SSH_custom_rule"
   network = "${google_compute_network.default.name}"
 
