@@ -588,6 +588,11 @@ For more information about security in GCP refer to sources below:
 - https://cloud.google.com/security/infrastructure/design/
 - https://cloud.google.com/solutions/connecting-securely
 
+## Update 03/04/2018
+I have added a Version2 folder where I will create add newly created terraform files to complete the objective
+  - Ensure the environment is completely secure 
+
+
 
 ## How do I find the address of the HTTPS load balancer?
 Very simple 
