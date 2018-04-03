@@ -25,7 +25,7 @@ resource "google_compute_network" "default" {
 
 
 resource "google_compute_firewall" "icmp" {
-  name    = "ICMP-custom-rule"
+  name    = "http-custom-rule"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -37,7 +37,7 @@ resource "google_compute_firewall" "icmp" {
 }
 
 resource "google_compute_firewall" "http" {
-  name    = "HTTP-custom-rule"
+  name    = "http-custom-rule"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -56,7 +56,7 @@ resource "google_compute_firewall" "http" {
 
 
 resource "google_compute_firewall" "https" {
-  name    = "HTTP-custom-rule"
+  name    = "https-custom-rule"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -70,7 +70,7 @@ resource "google_compute_firewall" "https" {
 }
 
 resource "google_compute_firewall" "ssh" {
-  name    = "SSH-custom-rule"
+  name    = "ssh-custom-rule"
   network = "${google_compute_network.default.name}"
 
   allow {
