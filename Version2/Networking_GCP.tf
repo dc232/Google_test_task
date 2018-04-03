@@ -12,6 +12,8 @@ resource "google_compute_subnetwork" "custom-us-central1" {
   //Broadcast
   // Therefore we need 3 + 4 = 7 IPs total (1 for bastion and 2 for the hosts in the subnet)
   //28 should be used in this case as theere are (2^32 - 2^28) = 2^4 = 16 address total 
+  // I will see the possibility of VPC peering soon if possible to create 2 subnets 1 public and 1 private 
+  //for now I will check via a deafult gateway for internet acess
   network       = "${google_compute_network.default.self_link}"
   region        = "us-central1"
 }
