@@ -80,7 +80,8 @@ resource "google_compute_firewall" "ssh" {
 //Added firewall rules to allow SSH
 
 //source tag in this case is seen as filters
-  source_tags = ["ssh-rule"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags = ["ssh-rule"]
 }
 
 //creates firewall rule needed to allow traffic through to the network
