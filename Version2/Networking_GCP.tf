@@ -25,7 +25,19 @@ resource "google_compute_network" "default" {
 
 
 resource "google_compute_firewall" "default" {
-  name    = "test-firewall"
+  name    = "ICMP_custom_rule"
+  network = "${google_compute_network.default.name}"
+
+  allow {
+    protocol = "icmp"
+  }
+//Added firewall rules to allow both ICMP
+//source tag in this case is seen as filters
+  source_tags = ["icmp-rule"]
+}
+
+resource "google_compute_firewall" "default" {
+  name    = "HTTP_custom_rule"
   network = "${google_compute_network.default.name}"
 
   allow {
@@ -34,10 +46,41 @@ resource "google_compute_firewall" "default" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "8080", "443", "22"]
+    ports    = ["80", "8080"]
   }
-//Added firewall rules to allow both ICMP and tcp, as well as HTTP and HTTPS and SSH
-  source_tags = ["web"]
+//Added firewall rules to allow HTTP
+
+//source tag in this case is seen as filters
+  source_tags = ["web-rule"]
+}
+
+
+resource "google_compute_firewall" "default" {
+  name    = "HTTP_custom_rule"
+  network = "${google_compute_network.default.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+//Added firewall rules to allow HTTP
+
+//source tag in this case is seen as filters
+  source_tags = ["https-rule"]
+}
+
+resource "google_compute_firewall" "default" {
+  name    = "SSH_custom_rule"
+  network = "${google_compute_network.default.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+//Added firewall rules to allow SSH
+
+//source tag in this case is seen as filters
+  source_tags = ["ssh-rule"]
 }
 
 //creates firewall rule needed to allow traffic through to the network
